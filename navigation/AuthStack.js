@@ -8,6 +8,7 @@ import OtpScreen from '../screens/AuthScreen/OtpScreen';
 import SignupScreen from '../screens/AuthScreen/RegisterationScreen';
 import LoginScreen from '../screens/AuthScreen/SignInScreen';
 import Onbording from '../screens/onboardingScreen/Onbording';
+import { WEB_CLIENT_ID } from "@env"
 
 
 const Stack = createNativeStackNavigator();
@@ -16,7 +17,9 @@ const AuthStack = () => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   let routeName;
 
+
   useEffect(() => {
+
     AsyncStorage.getItem('alreadyLaunched').then((value) => {
       if (value == null) {
         AsyncStorage.setItem('alreadyLaunched', 'true'); // No need to wait for `setItem` to finish, although you might want to handle errors
@@ -27,7 +30,7 @@ const AuthStack = () => {
     }); // Add some error handling, also you can simply do setIsFirstLaunch(null)
 
     GoogleSignin.configure({
-      webClientId: '139508279121-fj5a9lrg5ba40s2k4jdlfkr2ukjpbaju.apps.googleusercontent.com',
+      webClientId: WEB_CLIENT_ID,
     });
 
   }, []);

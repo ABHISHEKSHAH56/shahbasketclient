@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react'
-import { MyBottomTabs } from '../xy/BottomTabnavigation'
-import HomeMap from '../screens/Home/HomeMap'
+import HomeMap from '../screens/Maps/HomeMap';
+import { MyBottomTabs } from './BottomTabnavigation'
 
 const HomeStack = createNativeStackNavigator();
 

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import tw from 'tailwind-react-native-classnames'
 import { SIZES } from '../../constants'
 import MapComponment from './MapComponment'
+
 export default function HomeMap() {
         return (
                 <View>

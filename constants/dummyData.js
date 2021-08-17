@@ -3,7 +3,7 @@ import { icons } from './index'
 export const bannerdata = [
     {
         id: 2,
-        image: require('../assets/banners/2.png')
+        image: require('../assets/banners/delhi.png')
 
     },
     {
@@ -13,7 +13,7 @@ export const bannerdata = [
     },
     {
         id: 1,
-        image: require('../assets/banners/1.png')
+        image: require('../assets/banners/2.png')
 
     },
 ]
@@ -30,68 +30,109 @@ export const bannerdata = [
 export const categoreyItem = [
     {
         id: 1,
-        image: icons.burger,
-        title: "Citrus"
+        name: 'Green Vegetables',
+        image: require('../assets/categorey/greenveg.png')
     },
     {
         id: 2,
-        image: icons.burger,
-        title: "vegetable"
+        name: 'Flower Veggi',
+        image: require('../assets/categorey/flower1.png')
     },
+
     {
-        id: 3,
-        image: icons.burger,
-        title: "vegetable"
+        id: 6,
+        name: 'Combo',
+        image: require('../assets/categorey/combo.png')
     },
     {
         id: 4,
-        image: icons.rice,
-        title: "Fruit"
+        name: 'Root Veggi',
+        image: require('../assets/categorey/seed.jpg')
     },
-    {
-        id: 5,
-        image: icons.burger,
-        title: "Fruit"
-    },
-    {
-        id: 6,
-        image: icons.rice,
-        title: "Fruit"
-    }
+
 
 
 ]
 
-export const productitem = [
-    {
-        id: 1,
-        name: "apple",
-        image: require('../assets/Product/apple.jpg'),
-        quantity: "1 kg",
-        price: 60
-    },
-    {
-        id: 2,
-        name: "oninon",
-        image: require('../assets/Product/oninon.jpg'),
-        quantity: "1 kg",
-        price: 60
-    },
-    {
-        id: 3,
-        name: "Parval",
-        image: require('../assets/Product/parval.jpg'),
-        quantity: "1 kg",
-        price: 60
-    },
-    {
-        id: 4,
-        name: "pea",
-        image: require('../assets/Product/pea.jpg'),
-        quantity: "1 kg",
-        price: 60
-    },
 
+export const Mainproduct = [
+    {
 
+        name: 'Pyaz/Onion',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Green-Onion.jpg'),
+        description: 'Kanda Bhaji, Pyaz Tamatar ki Sabzi'
+    },
+    {
+        name: 'Nimbu/Lemon',
+        description: 'Nimbu ka Achar ',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Peppermint.jpg'),
 
+    },
+    {
+        name: 'Green Peas /Matar',
+        description: 'Aloo Matar, Matar Paneer, Matar Paratha',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Green-Peas.jpg'),
+    },
+    {
+        name: 'Kathal/JackFruit',
+        description: 'Kathal Biryani/Pulao, Kathal ki Sabzi, Kathal ka Achar',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Jackfruit.jpg'),
+    },
+    {
+        name: 'Parwal/Pointed Gourd',
+        description: 'Parwal ki Sabzi',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Pointed-Gourd.jpg'),
+    },
+    {
+        name: 'Tori/Torai/Ridge Gourd',
+        description: 'Tori ki Sabzi, Bharwan Torai',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/capsicum.jpg'),
+    },
+    {
+        name: 'Gajar/carrots',
+        description: 'Gajar Halwa, Gajar ki Sabzi, Gajar ka Achar, Carrot Juice',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Carrot.jpg'),
+    },
+    {
+        name: 'Arbi/Colocasia Roots',
+        description: 'Arbi ki Sabzi',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Green-Onion.jpg'),
+    },
+    {
+        name: 'Mooli/Radish',
+        description: 'Mooli ki Sabzi, Mooli ka Achar, Mooli Paratha',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Green-Onion.jpg'),
+    },
+    {
+        name: 'Lahsun/Garlic',
+        description: 'Lahsun Chutney, Lahsun Achar',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Dhaniya-ke-Patte.jpg'),
+    },
+    {
+        name: 'Aloo/Potato',
+        description: 'Aloo Tikki, Aloo Paratha, Aloo Bonda, Vada Pav, Samosa, Aloo ki Sabzi',
+        qty: '2 kg',
+        price: 200,
+        image: require('../assets/Product/Potato.jpg'),
+    }
 ]

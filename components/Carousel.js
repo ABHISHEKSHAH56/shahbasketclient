@@ -10,7 +10,7 @@ export default function Carousel() {
                         <View style={{
                                 height: 200,
                                 width: '90%',
-                                marginTop: 10,
+
                                 justifyContent: 'center',
                                 alignSelf: 'center',
                                 borderRadius: 8
@@ -18,17 +18,18 @@ export default function Carousel() {
                         }}>
                                 <Swiper height={200} style={styles.wrapper}
                                         autoplay={true}
-                                        dotColor={COLORS.white}
+                                        autoplayTimeout={4.5}
+                                        showsPagination={false}
 
                                 >
                                         <View style={styles.slide1} >
-                                                <Image source={require('../assets/banners/1.png')} resizeMode="cover" style={styles.imagestyle} />
+                                                <Image source={require('../assets/banners/delhi.png')} resizeMode="contain" style={styles.imagestyle} />
                                         </View>
                                         <View style={styles.slide1} >
-                                                <Image source={require('../assets/banners/2.png')} resizeMode="cover" style={styles.imagestyle} />
+                                                <Image source={require('../assets/banners/2.png')} resizeMode="contain" style={styles.imagestyle} />
                                         </View>
                                         <View style={styles.slide1} >
-                                                <Image source={require('../assets/banners/3.jpg')} resizeMode="cover" style={styles.imagestyle} />
+                                                <Image source={require('../assets/banners/1.png')} resizeMode="contain" style={styles.imagestyle} />
                                         </View>
                                 </Swiper>
                         </View>

@@ -6,6 +6,7 @@ import AppStack from './AppStack'
 import { View } from 'react-native';
 import LottieView from 'lottie-react-native'
 import { AuthContext } from './AuthProvider';
+import { COLORS } from '../constants';
 
 
 
@@ -36,7 +37,7 @@ const Routes = () => {
 
         if (isLoading) {
                 return (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.white }}>
                                 <LottieView source={require('../assets/badiya/45869-farmers.json')} autoPlay loop />
                         </View>
                 )
