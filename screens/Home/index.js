@@ -1,7 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native'
-import Animated from 'react-native-reanimated';
-import BottomSheet from 'reanimated-bottom-sheet';
 import { SIZES, COLORS, FONTS, icons } from '../../constants'
 import { categoreyItem, Mainproduct, productitem } from '../../constants/dummyData'
 import CarouselFunction from '../../components/Carousel'
@@ -9,10 +7,11 @@ import CardItem from '../../components/Card'
 import { useContext } from 'react'
 import { AuthContext } from '../../navigation/AuthProvider'
 import InitalAdress from './Componment/InitalAdress';
-import ICONS from 'react-native-vector-icons/FontAwesome5'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { GOOGLE_API_KEY } from "@env"
-import { useDispatch } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { AppSignUp, checker } from '../../API/Index'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Section = ({ title, childern, onPress }) => {
 
@@ -46,18 +45,34 @@ const Section = ({ title, childern, onPress }) => {
 
 
 function categorey() {
+
+        const importData = async () => {
+                try {
+                        console.log(await AsyncStorage.getItem("accessToken"))
+
+
+                        // return keys.map(req => console.log(req));
+                } catch (error) {
+                        console.error(error)
+                }
+        }
+        const handllercategorey = async () => {
+                importData()
+                await checker().then((res) => console.log(res.data)
+
+                ).catch((err) => console.log(err.response))
+
+        }
+        const categoreyproduct = categoreyItem.filter((item) => item.name !== 'All')
         return (
                 <FlatList
-                        data={categoreyItem}
+                        data={categoreyproduct}
                         horizontal
-
                         showsHorizontalScrollIndicator={false}
-
-
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => {
                                 return (
-                                        <TouchableOpacity style={{ flex: 1, alignItems: 'center', width: 90 }} onPress={() => { }}>
+                                        <TouchableOpacity style={{ flex: 1, alignItems: 'center', width: 90 }} onPress={handllercategorey}>
                                                 <Image source={item.image} style={{ height: 80, width: 80, borderRadius: 250 }} resizeMode='contain' />
                                                 <Text style={{ fontWeight: '700', color: COLORS.gray }} >{item.name}</Text>
 
@@ -72,138 +87,27 @@ function categorey() {
 
 
 export default function Home({ navigation }) {
+        const shop = useSelector(state => state.shop.products)
+
+
+
+
         const { logout } = useContext(AuthContext)
-        const bs = React.useRef(null);
-        const fall = new Animated.Value(1);
-        const dispatch = useDispatch()
-
-        const ListAddress = () => {
-
-                return (
-                        <View
-                                style={{
-                                        backgroundColor: 'white',
-                                        padding: 16,
-                                        height: 350,
-                                        marginTop: 20
-                                }}
-                        >
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Text style={{ ...FONTS.h3, fontWeight: '700' }}>
-                                                Search location
-
-                                        </Text>
-                                        <TouchableOpacity onPress={() => bs.current.snapTo(1)}>
-                                                <Image source={icons.cross} style={{ height: 15, width: 20 }} />
-                                        </TouchableOpacity>
-                                </View>
-                                <GooglePlacesAutocomplete
-                                        placeholder='Search...'
-                                        nearbyPlacesAPI="GooglePlacesSearch"
-                                        debounce={400}
-                                        styles={{
-                                                container: {
-                                                        flex: 0,
-                                                        elevation: 2,
-                                                        borderWidth: 1,
-                                                        height: 50,
-                                                        borderColor: COLORS.gray
-
-                                                },
-                                                textInput: {
-                                                        fontSize: 18,
 
 
-                                                },
-                                        }}
-                                        minLength={4}
-                                        enablePoweredByContainer={false}
-                                        fetchDetails={true}
-                                        returnKeyType={"search"}
 
-                                        onPress={(data, details = null) => {
-                                                // 'details' is provided when fetchDetails = true
-
-                                                dispatch({
-                                                        type: 'SET_DESTENATION',
-                                                        payload: {
-                                                                location: details.geometry.location,
-                                                                description: data.description
-                                                        }
-                                                })
-                                                navigation.navigate('MapScreen')
-                                        }}
-                                        query={{
-                                                key: GOOGLE_API_KEY,
-                                                language: 'en',
-                                        }}
-                                />
-
-
-                                {/* search */}
-                                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }} >
-                                        <ICONS name="location-arrow" color={COLORS.red} size={20} />
-                                        <Text style={{ color: COLORS.red, marginLeft: 5 }}>Use Current Location</Text>
-
-                                </TouchableOpacity>
-
-                                {/* usecureentlocation */}
-                                <View style={{ marginTop: 20 }} >
-                                        <Text style={{ ...FONTS.h4, fontWeight: '700' }}>Saved Address</Text>
-
-
-                                        <TouchableOpacity style={{ flexDirection: 'row', height: 65, marginTop: 10, alignItems: 'center', borderBottomColor: COLORS.white, borderBottomWidth: 1, elevation: 1 }}>
-                                                <View style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="home" color={COLORS.gray} size={20} />
-                                                </View>
-                                                <View style={{ flex: 8, alignItems: 'center' }}>
-                                                        <Text>Bapa nagar padam sing road karol bagh </Text>
-
-                                                </View>
-                                                <TouchableOpacity style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="ellipsis-v" color={COLORS.gray} size={20} />
-                                                </TouchableOpacity>
-
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', height: 65, marginTop: 10, alignItems: 'center', borderBottomColor: COLORS.white, borderBottomWidth: 1, elevation: 1 }}>
-                                                <View style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="home" color={COLORS.gray} size={20} />
-                                                </View>
-                                                <View style={{ flex: 8, alignItems: 'center' }}>
-                                                        <Text>Bapa nagar padam sing road karol bagh road karol bagh </Text>
-
-                                                </View>
-                                                <TouchableOpacity style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="ellipsis-v" color={COLORS.gray} size={20} />
-                                                </TouchableOpacity>
-
-                                        </TouchableOpacity>
-
-
-                                </View>
-                        </View>
-                )
-        }
 
 
 
         return (
                 <>
-                        <BottomSheet
-                                ref={bs}
-                                snapPoints={[330, 0]}
-                                borderRadius={10}
-                                renderContent={ListAddress}
-                                initialSnap={1}
-                                callbackNode={fall}
-                                enabledGestureInteraction={true}
-                        />
+
                         <View style={{ flex: 1, backgroundColor: COLORS.white2 }}>
                                 <FlatList
-                                        data={Mainproduct}
+                                        data={shop}
                                         ListHeaderComponent={
                                                 <View>
-                                                        <InitalAdress logout={logout} onPress={bs} />
+                                                        <InitalAdress logout={logout} />
                                                         <CarouselFunction />
                                                         <View style={{ margin: 5 }} >
                                                                 <Text style={{ ...FONTS.h3, fontWeight: '700', marginLeft: 8 }}>Categorey</Text>
@@ -216,9 +120,8 @@ export default function Home({ navigation }) {
                                         keyExtractor={(item) => item.name}
                                         ListFooterComponent={
                                                 <View>
-                                                        <Image source={require('../../assets/badiya/62265-walking-taco.gif')} style={{ width: SIZES.width, height: 200 }} />
 
-                                                        <View style={{ height: 10 }} />
+                                                        <View style={{ height: 100 }} />
                                                 </View>
                                         }
                                         renderItem={({ item }) => {

@@ -9,8 +9,7 @@ import SignupScreen from '../screens/AuthScreen/RegisterationScreen';
 import LoginScreen from '../screens/AuthScreen/SignInScreen';
 import Onbording from '../screens/onboardingScreen/Onbording';
 import { WEB_CLIENT_ID } from "@env"
-
-
+import Userdetails from '../screens/AuthScreen/Userdetails';
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
@@ -50,6 +49,7 @@ const AuthStack = () => {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SignUp" component={SignupScreen} />
       <Stack.Screen name="OtpVerify" component={OtpScreen} />
+
     </Stack.Navigator>
   );
 };

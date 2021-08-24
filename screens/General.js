@@ -60,13 +60,7 @@ export const NotificationsScreen = () => {
                 </View>
         )
 }
-export const ProfileScreen = () => {
-        return (
-                <View>
-                        <Text> Profile page</Text>
-                </View>
-        )
-}
+
 export const SearchScreen = () => {
         return (
                 <View>

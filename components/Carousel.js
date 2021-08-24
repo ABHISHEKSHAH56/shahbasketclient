@@ -26,7 +26,7 @@ export default function Carousel() {
                                                 <Image source={require('../assets/banners/delhi.png')} resizeMode="contain" style={styles.imagestyle} />
                                         </View>
                                         <View style={styles.slide1} >
-                                                <Image source={require('../assets/banners/2.png')} resizeMode="contain" style={styles.imagestyle} />
+                                                <Image source={require('../assets/banners/Green.png')} resizeMode="contain" style={styles.imagestyle} />
                                         </View>
                                         <View style={styles.slide1} >
                                                 <Image source={require('../assets/banners/1.png')} resizeMode="contain" style={styles.imagestyle} />

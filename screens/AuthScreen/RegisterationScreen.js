@@ -7,8 +7,8 @@ import FormInput from './component/FormInput';
 import SocialButton from './component/SocialButton';
 
 const SignupScreen = ({ navigation }) => {
-        const [email, setEmail] = useState();
-        const [password, setPassword] = useState();
+        const [email, setEmail] = useState("shahnameiskan7@gmail.com");
+        const [password, setPassword] = useState("Abhi@123")
         const [confirmPassword, setConfirmPassword] = useState();
 
         const { register } = useContext(AuthContext);

@@ -30,8 +30,9 @@ export const bannerdata = [
 export const categoreyItem = [
     {
         id: 1,
-        name: 'Green Vegetables',
-        image: require('../assets/categorey/greenveg.png')
+        name: 'All',
+        image: require('../assets/categorey/combo.png')
+
     },
     {
         id: 2,
@@ -48,6 +49,12 @@ export const categoreyItem = [
         id: 4,
         name: 'Root Veggi',
         image: require('../assets/categorey/seed.jpg')
+    },
+    {
+        id: 8,
+        name: 'Green Vegetables',
+        image: require('../assets/categorey/greenveg.png')
+
     },
 
 

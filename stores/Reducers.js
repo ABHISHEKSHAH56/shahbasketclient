@@ -3,6 +3,22 @@
 const initialState = {
         destination: null,
         intialDestination: 'Select the Dilvery Address',
+
+}
+
+
+
+let initialState = []
+if (typeof window !== 'undefined') {
+
+        if (localStorage.getItem("user")) {
+                //if user's data already in local storage
+                let userData = JSON.parse(localStorage.getItem("user"));
+                let token = localStorage.getItem("accessToken")
+                let userRedux = { ...userData, token }
+                initialState = userRedux
+
+        }
 }
 
 const tabReducer = (state = initialState, action) => {
@@ -19,6 +35,12 @@ const tabReducer = (state = initialState, action) => {
                                 intialDestination: action.payload,
 
                         };
+
+                case 'User_Details':
+                        return {
+                                ...state,
+                                userDetails: action.payload
+                        }
 
 
 
