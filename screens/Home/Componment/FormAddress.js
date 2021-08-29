@@ -31,7 +31,7 @@ export default function FormAddress({ navigation }) {
                         await PushProfileAddress(profileaddress).then((res) => {
                                 dispatch({
                                         type: 'SET_DESTENATION',
-                                        payload: profileaddress
+                                        payload: { ...destination, completeAddress: completeAddress }
                                 })
                                 navigation.pop(3)
 

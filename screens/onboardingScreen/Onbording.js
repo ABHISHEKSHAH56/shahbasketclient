@@ -3,32 +3,27 @@ import { useRef, useState } from 'react'
 import { View, Text, FlatList, Image, Animated, TouchableOpacity } from 'react-native'
 import Svg, { G, Circle } from 'react-native-svg'
 import AntDesign from 'react-native-vector-icons/Ionicons'
-import { FONTS, SIZES } from '../../constants/theme'
+import { COLORS, FONTS, SIZES } from '../../constants/theme'
 const data = [
         {
                 id: 1,
-                title: "Quick & Easy Payments",
-                descrpition: "Grow Your lorem by accepting payment from Upi cards",
-                image: require('../../assets/images/1.png')
+                title: "Choose a Fresh Vegetables",
+                descrpition: "When you order vegetables ,we'll hook you up with exclusive coupon , special and rewards",
+                image: require('../../assets/banners/101.jpg')
         },
         {
                 id: 2,
-                title: "Quick & Easy Payments",
-                descrpition: "Grow Your lorem by accepting payment from Upi cards",
-                image: require('../../assets/images/2.png')
+                title: " Free Delivery to Home",
+                descrpition: "We make vegetable & fruits odering faster,simple and free no matter if you are order online or cash ",
+                image: require('../../assets/banners/102.jpg')
         },
         {
                 id: 3,
-                title: "Quick & Easy Payments",
-                descrpition: "Grow Your lorem by accepting payment from Upi cards",
-                image: require('../../assets/images/3.png')
-        },
-        {
-                id: 4,
-                title: "Quick & Easy Payments",
-                descrpition: "Grow Your lorem by accepting payment from Upi cards",
-                image: require('../../assets/images/4.png')
+                title: "Receive the Fresh Vegetables",
+                descrpition: "You will receive the fresh vegetables within in a day,And get free delivery credits for every order. ",
+                image: require('../../assets/banners/5.jpg')
         }
+
 ]
 
 const Nextbutton = ({ percentage, ScrollTo }) => {
@@ -161,19 +156,30 @@ const OnboardingItem = ({ item }) => {
                                 resizeMode: 'contain'
                         }} />
 
-                        <View style={{ flex: 1 }}>
+                        <View style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingHorizontal: SIZES.radius
+
+
+                        }}>
                                 <Text style={{
-                                        ...FONTS.h2,
-                                        marginBottom: 10,
-                                        color: '#493d8a',
-                                        textAlign: 'center'
+                                        ...FONTS.h1,
+                                        fontSize: 25,
+                                        color: 'crimson',
+                                        fontWeight: '700'
                                 }}>
                                         {item.title}
                                 </Text>
                                 <Text style={{
-                                        ...FONTS.body3,
-                                        color: '#62656b',
+                                        marginTop: SIZES.radius,
                                         textAlign: 'center',
+                                        color: COLORS.darkGray,
+                                        paddingHorizontal: SIZES.padding,
+                                        ...FONTS.body3,
+                                        fontWeight: '700'
+
 
                                 }}>{item.descrpition}</Text>
 

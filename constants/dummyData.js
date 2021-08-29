@@ -1,22 +1,6 @@
 
 import { icons } from './index'
-export const bannerdata = [
-    {
-        id: 2,
-        image: require('../assets/banners/delhi.png')
 
-    },
-    {
-        id: 3,
-        image: require('../assets/banners/3.jpg')
-
-    },
-    {
-        id: 1,
-        image: require('../assets/banners/2.png')
-
-    },
-]
 
 // Apples and pears
 // Citrus – oranges, grapefruits, mandarins and limes

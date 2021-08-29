@@ -79,7 +79,7 @@ const UserProfileScreen = ({ navigation }) => {
                                         </View>
                                 </TouchableRipple>
                                 <Divider />
-                                <TouchableRipple onPress={() => navigation.navigate("Addressbook")}>
+                                <TouchableRipple onPress={() => navigation.navigate("OrderSuccess")}>
                                         <View style={styles.menuItem}>
                                                 <Image source={icons.book} style={{ width: 20, height: 20, tintColor: COLORS.black }} />
                                                 <Text style={styles.menuItemText}>Address Book</Text>

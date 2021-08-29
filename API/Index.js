@@ -70,3 +70,6 @@ export const Applogout = async () => await Protected.get("/auth/logout")
 
 //
 export const PushProfileAddress = async (data) => await Protected.post("/user/add/address", data)
+export const AppVerifyMobile = async (data) => await Protected.patch("/user/update", data)
+export const OrderInitate = async (data) => await Protected.post("/order/initate", data)
+export const fetchProduct = async () => await Protected.get("/product/all")

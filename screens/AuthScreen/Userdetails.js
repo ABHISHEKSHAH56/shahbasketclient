@@ -19,20 +19,25 @@ import SocialButton from './component/SocialButton';
 export default function Userdetails({ navigation }) {
         const [phone, setphone] = useState('+91');
         const [name, setname] = useState('');
-        const dispatch = useDispatch()
 
 
+        const { phonelogin, googlelogin } = useContext(AuthContext);
         const handel = () => {
-                dispatch({
-                        type: 'User_Details',
-                        payload: {
+                if (phone && phone.length > 9) {
+                        console.log(phone)
+                        phonelogin(phone)
+                        navigation.navigate("userverifyotp", {
                                 name: name,
-                                mobile: phone
-                        }
-                })
-                navigation.goBack()
+                                phone: phone,
+                        })
 
+                }
+                else {
+                        alert("number must be 10 digit")
+                }
         }
+
+
 
         return (
                 <View  >

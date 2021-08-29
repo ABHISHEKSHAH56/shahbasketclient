@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react'
 import Userdetails from '../screens/AuthScreen/Userdetails';
+import UserOtp from '../screens/AuthScreen/UserOtp';
 import Cart from '../screens/Cart/Cart';
-import OrderSucess from '../screens/Cart/OrderSucess';
 import AddressBottom from '../screens/Home/Componment/AddressBottom';
 import FormAddress from '../screens/Home/Componment/FormAddress';
 import HomeMap from '../screens/Maps/HomeMap';
@@ -10,6 +10,7 @@ import AddressBook from '../screens/Profile/AddressBook';
 import PastOrders from '../screens/Profile/PastOrders';
 import Support from '../screens/Profile/Support';
 import { MyBottomTabs } from './BottomTabnavigation'
+import OrderSuccessPage from '../screens/Cart/OrderSucess'
 
 const HomeStack = createNativeStackNavigator();
 
@@ -24,7 +25,8 @@ export default function AppStack() {
       <HomeStack.Screen name="Pastorder" component={PastOrders} />
       <HomeStack.Screen name="Addressbook" component={AddressBook} />
       <HomeStack.Screen name="Persnaldetails" component={Userdetails} />
-      <HomeStack.Screen name="Ordersuccess" component={OrderSucess} />
+      <HomeStack.Screen name="OrderSuccess" component={OrderSuccessPage} />
+      <HomeStack.Screen name="userverifyotp" component={UserOtp} />
     </HomeStack.Navigator>
   )
 }

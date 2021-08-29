@@ -30,7 +30,7 @@ export default function CartItem({ item, index }) {
         const handleminus = () => {
                 if (cureentIndex > baseindex) {
                         const cost = baseprice * pricearray[cureentIndex - 1] / pricearray[baseindex]
-                        dispatch(adjustItemQty(item.id, measurment[cureentIndex - 1], cost))
+                        dispatch(adjustItemQty(item._id, measurment[cureentIndex - 1], cost))
                         setcurrentprice(cost)
                         setcurrentWeight(measurment[cureentIndex - 1])
                         setcurrentIndex(cureentIndex - 1)
@@ -41,7 +41,7 @@ export default function CartItem({ item, index }) {
         const handleplus = () => {
                 if (cureentIndex < measurment.length - 1) {
                         const cost = baseprice * pricearray[cureentIndex + 1] / pricearray[baseindex]
-                        dispatch(adjustItemQty(item.id, measurment[cureentIndex + 1], cost))
+                        dispatch(adjustItemQty(item._id, measurment[cureentIndex + 1], cost))
                         setcurrentprice(cost)
                         setcurrentWeight(measurment[cureentIndex + 1])
                         setcurrentIndex(cureentIndex + 1)
@@ -73,7 +73,7 @@ export default function CartItem({ item, index }) {
 
                                 </View>
                                 <View style={{ justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                        <TouchableOpacity onPress={() => dispatch(removeFromCart(item.id))}>
+                                        <TouchableOpacity onPress={() => dispatch(removeFromCart(item._id))}>
                                                 <Image source={icons.trash} style={{ width: 15, height: 15, tintColor: COLORS.red }} />
 
 

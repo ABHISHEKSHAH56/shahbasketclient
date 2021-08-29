@@ -9,6 +9,7 @@ import {
         StyleSheet,
         ScrollView
 } from 'react-native';
+import { COLORS, SIZES } from '../../constants';
 import { AuthContext } from '../../navigation/AuthProvider';
 import FormButton from './component/FormButton';
 import FormInput from './component/FormInput';
@@ -25,10 +26,11 @@ const LoginScreen = ({ navigation }) => {
         return (
                 <ScrollView contentContainerStyle={styles.container}>
                         <Image
-                                source={require('../../assets/images/onboarding-1.png')}
+                                source={require('../../assets/banners/6.png')}
                                 style={styles.logo}
                         />
-                        <Text style={styles.text}>RN Social App</Text>
+                        <Text style={{ fontSize: 25, color: COLORS.primary, fontWeight: '700', marginVertical: SIZES.padding }}>SHAH BASKET </Text>
+
 
                         <FormInput
                                 labelValue={email}
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: 20,
-                paddingTop: 50
+                paddingTop: 10
         },
         logo: {
                 height: 150,

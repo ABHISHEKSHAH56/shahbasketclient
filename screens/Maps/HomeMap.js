@@ -14,6 +14,7 @@ export default function HomeMap() {
         const navigation = useNavigation()
         const destination = useSelector(state => state.address.destination)
         const [formateedAdress, setformateedAdress] = React.useState(null)
+        console.log(destination, "jjhnhgvb")
         const dispatch = useDispatch()
         return (
                 <View >

@@ -3,13 +3,14 @@ import { useEffect } from 'react';
 import { View, Text, Image } from 'react-native'
 import { COLORS, SIZES } from '../../constants'
 
-export default function OrderSucess({ navigation }) {
+export default function OrderSuccessPage({ navigation }) {
         useEffect(() => {
                 setTimeout(() => {
+                        navigation.popToTop()
 
 
-                }, 2000);
-                navigation.popToTop()
+                }, 4000);
+
 
         }, [])
         return (

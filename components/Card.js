@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, adjustItemQty, removeFromCart } from '../stores/Shopping/shopping-actions'
 
 export default function CardItem({ data, containerStyle, onpress }) {
+  console.log(data._id)
 
   const baseqty = data.baseQty
   const baseprice = data.basePrice
@@ -34,11 +35,11 @@ export default function CardItem({ data, containerStyle, onpress }) {
   const [click, setclick] = useState(false)
   const carthandller = () => {
     if (!click) {
-      dispatch(addToCart(data.id))
+      dispatch(addToCart(data._id))
       setclick(true)
     }
     else {
-      dispatch(removeFromCart(data.id))
+      dispatch(removeFromCart(data._id))
       setcurrentprice(baseprice)
       setcurrentIndex(baseindex)
       setclick(false)
@@ -63,7 +64,7 @@ export default function CardItem({ data, containerStyle, onpress }) {
   const handleminus = () => {
     if (cureentIndex > baseindex) {
       const cost = baseprice * pricearray[cureentIndex - 1] / pricearray[baseindex]
-      dispatch(adjustItemQty(data.id, measurment[cureentIndex - 1], cost))
+      dispatch(adjustItemQty(data._id, measurment[cureentIndex - 1], cost))
       setcurrentprice(cost)
       setcurrentWeight(measurment[cureentIndex - 1])
       setcurrentIndex(cureentIndex - 1)
@@ -74,7 +75,7 @@ export default function CardItem({ data, containerStyle, onpress }) {
   const handleplus = () => {
     if (cureentIndex < measurment.length - 1) {
       const cost = baseprice * pricearray[cureentIndex + 1] / pricearray[baseindex]
-      dispatch(adjustItemQty(data.id, measurment[cureentIndex + 1], cost))
+      dispatch(adjustItemQty(data._id, measurment[cureentIndex + 1], cost))
       setcurrentprice(cost)
       setcurrentWeight(measurment[cureentIndex + 1])
       setcurrentIndex(cureentIndex + 1)
@@ -148,7 +149,7 @@ export default function CardItem({ data, containerStyle, onpress }) {
 
 
       <View style={{}}>
-        <Image source={data.image} style={{ height: 100, width: 110, margin: 4, marginTop: 10 }} resizeMode='contain' />
+        <Image source={{ uri: data.image }} style={{ height: 100, width: 110, margin: 4, marginTop: 10 }} resizeMode='contain' />
       </View>
       <View style={{ position: 'absolute', bottom: 3, right: 20, borderRadius: 3, borderTopRightRadius: 3 }}>
 

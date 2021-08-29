@@ -147,7 +147,7 @@ export default function Search({ navigation }) {
 
                                         </View>
                                 }
-                                keyExtractor={(item) => item.id}
+                                keyExtractor={(item) => item._id}
                                 ListEmptyComponent={renderemptyerror}
                                 ListFooterComponent={
                                         <View>

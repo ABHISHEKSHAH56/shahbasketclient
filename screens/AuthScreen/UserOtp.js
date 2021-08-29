@@ -20,11 +20,11 @@ const OtpScreen = ({ navigation, route }) => {
 
         const [timer, settimer] = useState(60)
         const [code, setcode] = useState(null);
-        const { phone } = route.params
-        const { mobileverification, phonelogin } = useContext(AuthContext);
-        const handller = () => {
-                mobileverification(code)
-
+        const { phone, name } = route.params
+        const { userverifier, phonelogin } = useContext(AuthContext);
+        const handller = async () => {
+                await userverifier(code, name)
+                navigation.pop(2)
 
 
         }

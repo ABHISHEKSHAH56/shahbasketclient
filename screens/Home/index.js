@@ -9,9 +9,19 @@ import { AuthContext } from '../../navigation/AuthProvider'
 import InitalAdress from './Componment/InitalAdress';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { AppSignUp, checker } from '../../API/Index'
-import axios from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { fetchProduct } from '../../API/Index'
+
+function renderempty() {
+        return (
+                <View style={{ marginHorizontal: SIZES.padding, backgroundColor: COLORS.white }}>
+                        <Image source={require("../../assets/messages/loader.gif")} resizeMode='contain' style={{ width: SIZES.width, height: 350 }} />
+
+                </View>
+
+        )
+}
+
+
 
 const Section = ({ title, childern, onPress }) => {
 
@@ -46,21 +56,8 @@ const Section = ({ title, childern, onPress }) => {
 
 function categorey() {
 
-        const importData = async () => {
-                try {
-                        console.log(await AsyncStorage.getItem("accessToken"))
 
-
-                        // return keys.map(req => console.log(req));
-                } catch (error) {
-                        console.error(error)
-                }
-        }
         const handllercategorey = async () => {
-                importData()
-                await checker().then((res) => console.log(res.data)
-
-                ).catch((err) => console.log(err.response))
 
         }
         const categoreyproduct = categoreyItem.filter((item) => item.name !== 'All')
@@ -87,7 +84,31 @@ function categorey() {
 
 
 export default function Home({ navigation }) {
+        const dispatch = useDispatch()
+        useEffect(() => {
+                setTimeout(async () => {
+                        await fetchProduct().then((res) => {
+
+                                console.log(res.data)
+                                const { product } = res.data
+                                dispatch({
+                                        type: 'FETCH_PRODUCT',
+                                        payload: product
+                                })
+                                console.log(res.data.data)
+
+
+
+
+                        }).catch((err) => console.log(err.response))
+
+                }, 3000);
+        }, [])
+
+
+
         const shop = useSelector(state => state.shop.products)
+        console.log(shop)
 
 
 
@@ -105,6 +126,7 @@ export default function Home({ navigation }) {
                         <View style={{ flex: 1, backgroundColor: COLORS.white2 }}>
                                 <FlatList
                                         data={shop}
+                                        ListEmptyComponent={renderempty}
                                         ListHeaderComponent={
                                                 <View>
                                                         <InitalAdress logout={logout} />
@@ -117,7 +139,7 @@ export default function Home({ navigation }) {
 
                                                 </View>
                                         }
-                                        keyExtractor={(item) => item.name}
+                                        keyExtractor={(item, index) => index + 5}
                                         ListFooterComponent={
                                                 <View>
 
@@ -126,7 +148,7 @@ export default function Home({ navigation }) {
                                         }
                                         renderItem={({ item }) => {
                                                 return (
-                                                        <CardItem
+                                                        <CardItem id={item._id}
                                                                 containerStyle={{
                                                                         height: 150,
                                                                         marginHorizontal: SIZES.padding,

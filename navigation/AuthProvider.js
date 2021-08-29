@@ -3,13 +3,15 @@ import { View, Text } from 'react-native'
 import auth from "@react-native-firebase/auth"
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import firestore from '@react-native-firebase/firestore';
-import { AppGoogleLogIn, AppLogIn, Applogout, AppMobileLogIn, AppSignUp } from '../API/Index';
+import { AppGoogleLogIn, AppLogIn, Applogout, AppMobileLogIn, AppSignUp, AppVerifyMobile } from '../API/Index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
 export const AuthContext = createContext();
 
 export const Authprovider = ({ children }) => {
   const [user, setuser] = useState(null)
   const [confirm, setConfirm] = useState(null);
+  const dispatch = useDispatch()
   auth
   return (
     <AuthContext.Provider value={{
@@ -124,7 +126,8 @@ export const Authprovider = ({ children }) => {
 
           }
           console.log(data)
-          await AppMobileLogIn(data).then((res) => {
+          AppMobileLogIn(data).then((res) => {
+            console.log(res.data.accessToken)
             AsyncStorage.setItem("accessToken", res.data.accessToken)
             AsyncStorage.setItem("userData", JSON.stringify(res.data.user))
           }).catch((err) => console.log(err.response.error))
@@ -136,6 +139,32 @@ export const Authprovider = ({ children }) => {
 
         }
 
+      },
+      userverifier: async (otp, name) => {
+        try {
+          await confirm.confirm(otp);
+          const data = {
+            name: name,
+            phone: auth().currentUser.phoneNumber,
+          }
+          await AppVerifyMobile(data).then((res) => {
+            console.log(res.data.id)
+            dispatch({
+              type: 'SET_PERSNAL',
+              payload: {
+                id: res.data.id,
+                name: name,
+                phone: auth().currentUser.phoneNumber
+              }
+            })
+          }).catch((err) => console.log(err.response))
+
+
+        } catch (error) {
+          alert(JSON.stringify(error))
+
+
+        }
       }
 
     }}>

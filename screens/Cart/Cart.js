@@ -5,6 +5,7 @@ import { Button, Divider } from 'react-native-paper'
 import ICON from 'react-native-vector-icons/FontAwesome'
 import { useDispatch, useSelector } from 'react-redux'
 import { connect } from "react-redux";
+import { OrderInitate } from '../../API/Index'
 import { COLORS, FONTS, icons, SIZES } from '../../constants'
 import CartItem from './CartItem'
 
@@ -30,7 +31,7 @@ const Cart = ({ navigation, cart }) => {
         console.log(cart.length)
         const destination = useSelector(state => state.address.destination)
         const temp = useSelector(state => state.address.intialDestination)
-        const userDetails = useSelector(state => state.address.userDetails)
+        const userDetails = useSelector(state => state.address.persnaldetails)
         console.log(userDetails)
         console.log(destination)
         const [cardclick, setcardclick] = useState('payment')
@@ -49,26 +50,33 @@ const Cart = ({ navigation, cart }) => {
         }, [destination, userDetails,])
         const dispatch = useDispatch()
 
-        const handlepayment = () => {
+        const handlepayment = async () => {
                 const Product = {
-                        Address: destination,
-                        Item: cart,
-                        chareges: {
+                        userId: userDetails.id,
+                        address: destination,
+                        product: cart,
+                        charges: {
                                 total: grandTotal,
                                 tax: tax,
                                 itemTotal: subtotal,
                                 delivery: deliverycharge
-                        }
+                        },
+                        userDetails: userDetails
+
                 }
+                OrderInitate(Product).then((res) => {
+                        console.log(Product)
+                        navigation.navigate("OrderSuccess")
+                        dispatch({
+                                type: 'ORDER_DISPATCH',
 
+                        })
 
-
-                console.log(Product)
-                dispatch({
-                        type: 'ORDER_DISPATCH',
-
+                }).catch((err) => {
+                        alert(err.response.error.message)
                 })
-                navigation.navigate("Ordersuccess")
+                //navigation.navigate("Pastorder")
+
 
 
         }
@@ -94,7 +102,7 @@ const Cart = ({ navigation, cart }) => {
                                 <View style={{ marginVertical: 5 }}>
                                         {
                                                 userDetails ? <Text style={{ color: COLORS.gray, marginHorizontal: 20, fontSize: 12, fontWeight: '700' }}>
-                                                        {userDetails.name} ,{userDetails.mobile}
+                                                        {userDetails.name} ,{userDetails.phone}
                                                 </Text> : <Text style={{ color: COLORS.gray, marginHorizontal: 20, fontSize: 12, fontWeight: '700' }}>Add to user Details</Text>
                                         }
                                 </View>
@@ -273,7 +281,7 @@ const Cart = ({ navigation, cart }) => {
                                                 </> : null
 
                                         }
-                                        keyExtractor={(item) => item.id}
+                                        keyExtractor={(item) => item._id}
                                         renderItem={({ item, index }) => {
                                                 return (
                                                         <CartItem item={item} index={index} />
