@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Text } from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SIZES } from '../../../constants';
@@ -8,8 +8,9 @@ const FormInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
         return (
                 <View style={styles.inputContainer}>
                         <View style={styles.iconStyle}>
-                                <AntDesign name={iconType} size={25} color="#666" />
+                                <Text style={{ fontWeight: '700' }}>+91</Text>
                         </View>
+
                         <TextInput
                                 value={labelValue}
                                 style={styles.input}

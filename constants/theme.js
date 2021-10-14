@@ -1,11 +1,6 @@
 import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
-export const BaseStyle = {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-}
 
 
 export const COLORS = {
@@ -73,6 +68,3 @@ export const FONTS = {
     body5: { fontFamily: "Poppins-Regular", fontSize: SIZES.body5, lineHeight: 22 },
 };
 
-const appTheme = { COLORS, SIZES, FONTS };
-
-export default appTheme;

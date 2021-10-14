@@ -1,31 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-import AuthStack from './AuthStack';
 import AppStack from './AppStack'
 import { View } from 'react-native';
 import LottieView from 'lottie-react-native'
-import { AuthContext } from './AuthProvider';
 import { COLORS } from '../constants';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContent } from './DraweContent';
+import Home from '../screens/Home';
 
 
 
 const Routes = () => {
-        const [User, setUser] = useState(AuthContext)
-
-        // const { user, setUser } = useState(AuthContext);
-        const [initializing, setInitializing] = useState(true);
         const [isLoading, setisLoading] = useState(true)
-
-        const onAuthStateChanged = (user) => {
-                setUser(user);
-                if (initializing) setInitializing(false);
-        };
-
-        useEffect(() => {
-                const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-                return subscriber; // unsubscribe on unmount
-        }, []);
+        const Drawer = createDrawerNavigator();
 
         useEffect(() => {
                 setTimeout(() => {
@@ -43,11 +30,14 @@ const Routes = () => {
                 )
         }
 
-        if (initializing) return null;
-
         return (
                 <NavigationContainer>
-                        {User ? <AppStack /> : <AuthStack />}
+
+                        <Drawer.Navigator screenOptions={{
+                                headerShown: false
+                        }} drawerContent={props => <DrawerContent {...props} />}>
+                                <Drawer.Screen name="HomeDrawer" component={AppStack} />
+                        </Drawer.Navigator>
                 </NavigationContainer>
         );
 };

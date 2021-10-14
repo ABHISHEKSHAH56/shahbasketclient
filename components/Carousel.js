@@ -9,7 +9,7 @@ export default function Carousel() {
                 <View >
                         <View style={{
                                 height: 200,
-                                width: '90%',
+                                width: '100%',
 
                                 justifyContent: 'center',
                                 alignSelf: 'center',
@@ -26,10 +26,10 @@ export default function Carousel() {
                                                 <Image source={require('../assets/banners/delhi.png')} resizeMode="contain" style={styles.imagestyle} />
                                         </View>
                                         <View style={styles.slide1} >
-                                                <Image source={require('../assets/banners/Green.png')} resizeMode="contain" style={styles.imagestyle} />
+                                                <Image source={require('../assets/banners/Green.png')} resizeMode="cover" style={styles.imagestyle} />
                                         </View>
                                         <View style={styles.slide1} >
-                                                <Image source={require('../assets/banners/1.png')} resizeMode="contain" style={styles.imagestyle} />
+                                                <Image source={require('../assets/banners/1.jpg')} resizeMode="cover" style={styles.imagestyle} />
                                         </View>
                                 </Swiper>
                         </View>
@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
                 flex: 1,
                 justifyContent: 'center',
                 backgroundColor: 'transparent',
-                borderRadius: 8
+
         },
 
         imagestyle: {
                 height: "90%",
-                width: "90%",
+                width: SIZES.width - 30,
                 alignSelf: 'center',
-                borderRadius: 8,
+
 
         }
 })
