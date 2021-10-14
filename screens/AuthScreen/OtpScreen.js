@@ -15,15 +15,32 @@ import FormButton from './component/FormButton';
 import FormInput from './component/FormInput';
 import SocialButton from './component/SocialButton';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
+import AnimatedLoader from 'react-native-animated-loader';
 
 const OtpScreen = ({ navigation, route }) => {
 
         const [timer, settimer] = useState(60)
         const [code, setcode] = useState(null);
+        const [visible, setVisible] = useState(false);
         const { phone } = route.params
         const { mobileverification, phonelogin } = useContext(AuthContext);
         const handller = () => {
-                mobileverification(code)
+                setVisible(true)
+                const value = mobileverification(code);
+                if (value) {
+
+                        setTimeout(() => {
+                                setVisible(false)
+                                navigation.pop(2)
+                        }, 1000);
+                }
+                else {
+
+                        alert("your code does not match ...try again ")
+
+                }
+
+
 
 
 
@@ -53,6 +70,22 @@ const OtpScreen = ({ navigation, route }) => {
 
         return (
                 <ScrollView contentContainerStyle={styles.container}>
+
+                        <AnimatedLoader
+                                visible={visible}
+                                overlayColor="rgba(255,255,255,0.95)"
+                                source={require("../../assets/messages/tri.json")}
+                                animationStyle={{
+                                        width: 250,
+                                        height: 250
+                                }}
+                                speed={1}
+                        >
+
+                        </AnimatedLoader>
+
+
+
                         <Image
                                 source={require('../../assets/banners/6.png')}
                                 style={styles.logo}
@@ -110,11 +143,27 @@ const OtpScreen = ({ navigation, route }) => {
 
 
                         </View>
-                        <FormButton
-                                buttonTitle="Verify Code"
-                                onPress={handller}
+                        <TouchableOpacity
+                                onPress={code ? handller : null}
+                                style={{
+                                        marginTop: 10,
+                                        width: '100%',
+                                        height: SIZES.height / 15,
+                                        backgroundColor: code ? COLORS.green : COLORS.gray,
+                                        padding: 10,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        borderRadius: 3,
 
-                        />
+                                }} >
+                                <Text style={{
+                                        fontSize: 18,
+                                        fontWeight: 'bold',
+                                        color: '#ffffff',
+                                        fontFamily: 'Lato-Regular',
+
+                                }}>Verify</Text>
+                        </TouchableOpacity>
 
 
                 </ScrollView>

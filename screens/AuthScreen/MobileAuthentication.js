@@ -15,14 +15,16 @@ import FormInput from './component/FormInput';
 import SocialButton from './component/SocialButton';
 
 const MobileAuthenticationScreen = ({ navigation }) => {
-        const [phone, setphone] = useState('+91');
+        const [phone, setphone] = useState('');
 
         const { phonelogin, googlelogin } = useContext(AuthContext);
         const handel = () => {
                 if (phone && phone.length > 9) {
-                        phonelogin(phone)
+                        const x = '+91' + phone
+
+                        phonelogin(x)
                         navigation.navigate('OtpVerify', {
-                                phone: phone,
+                                phone: x,
                         })
                 }
                 else {
@@ -36,12 +38,12 @@ const MobileAuthenticationScreen = ({ navigation }) => {
                                 source={require('../../assets/banners/6.png')}
                                 style={styles.logo}
                         />
-                        <Text style={{ fontSize: 25, color: COLORS.primary, fontWeight: '700', marginVertical: SIZES.padding }}>SHAH BASKET </Text>
+                        <Text style={{ fontSize: 25, color: COLORS.black, fontWeight: '700', marginVertical: SIZES.padding }}>Mobile Authentication</Text>
 
                         <FormInput
                                 labelValue={phone}
                                 onChangeText={(phone) => setphone(phone)}
-                                placeholderText="Mobile"
+                                placeholderText="Mobile Number"
                                 iconType="phone"
                                 keyboardType="numeric"
                         />
@@ -56,32 +58,9 @@ const MobileAuthenticationScreen = ({ navigation }) => {
 
 
 
-                        <View style={{ marginTop: 50 }}>
-                                <SocialButton
-                                        buttonTitle="Sign In with email"
-                                        btnType="user"
-                                        color="#4867aa"
-                                        backgroundColor="#e6eaf4"
-                                        onPress={() => navigation.navigate('Login')}
-                                />
-
-                                <SocialButton
-                                        buttonTitle="Sign In with Google"
-                                        btnType="google"
-                                        color="#de4d41"
-                                        backgroundColor="#f5e7ea"
-                                        onPress={() => googlelogin()}
-                                />
-                        </View>
 
 
-                        <TouchableOpacity
-                                style={styles.forgotButton}
-                                onPress={() => navigation.navigate('SignUp')}>
-                                <Text style={styles.navButtonText}>
-                                        Don't have an acount? Create here
-                                </Text>
-                        </TouchableOpacity>
+
                 </ScrollView>
         );
 };

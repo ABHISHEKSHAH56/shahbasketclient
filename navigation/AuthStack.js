@@ -7,7 +7,7 @@ import MobileAuthenticationScreen from '../screens/AuthScreen/MobileAuthenticati
 import OtpScreen from '../screens/AuthScreen/OtpScreen';
 import SignupScreen from '../screens/AuthScreen/RegisterationScreen';
 import LoginScreen from '../screens/AuthScreen/SignInScreen';
-import Onbording from '../screens/onboardingScreen/Onbording';
+import Onbording from '../screens/AuthScreen/Onbording';
 import { WEB_CLIENT_ID } from "@env"
 import Userdetails from '../screens/AuthScreen/Userdetails';
 const Stack = createNativeStackNavigator();

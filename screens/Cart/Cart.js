@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { View, Text, TouchableWithoutFeedback, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
-import { Button, Divider } from 'react-native-paper'
+import { View, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
+import { Modal, Portal, Button, Provider, Divider } from 'react-native-paper'
 import ICON from 'react-native-vector-icons/FontAwesome'
 import { useDispatch, useSelector } from 'react-redux'
 import { connect } from "react-redux";
 import { OrderInitate } from '../../API/Index'
 import { COLORS, FONTS, icons, SIZES } from '../../constants'
+import Loder from '../Loder'
 import CartItem from './CartItem'
+import AnimatedLoader from "react-native-animated-loader";
 
 
 
@@ -28,31 +30,31 @@ function renderempty() {
 
 
 const Cart = ({ navigation, cart }) => {
-        console.log(cart.length)
         const destination = useSelector(state => state.address.destination)
-        const temp = useSelector(state => state.address.intialDestination)
-        const userDetails = useSelector(state => state.address.persnaldetails)
-        console.log(userDetails)
-        console.log(destination)
+        const [visible, setVisible] = useState(false)
+        const Userdetails = useSelector(state => state.address.userData)
         const [cardclick, setcardclick] = useState('payment')
+        console.log(Userdetails, destination)
+
+
         const subtotal = cart.reduce((a, c) => a + c.price, 0)
         const tax = 0
         const deliverycharge = subtotal > 300 ? 0 : 50
         const grandTotal = subtotal + deliverycharge + tax
         useEffect(() => {
-                console.log(destination, temp)
-                if (!(destination && destination.hasOwnProperty('completeAddress'))) setcardclick('address')
-                else if (!userDetails) setcardclick('userdetails')
 
+                if (Userdetails == null) setcardclick('userdetails')
+                else if (!(destination && destination.hasOwnProperty('completeAddress'))) setcardclick('address')
                 else {
                         setcardclick('payment')
                 }
-        }, [destination, userDetails,])
+        }, [destination, Userdetails])
         const dispatch = useDispatch()
 
         const handlepayment = async () => {
+                setVisible(true)
                 const Product = {
-                        userId: userDetails.id,
+                        userId: Userdetails,
                         address: destination,
                         product: cart,
                         charges: {
@@ -61,21 +63,24 @@ const Cart = ({ navigation, cart }) => {
                                 itemTotal: subtotal,
                                 delivery: deliverycharge
                         },
-                        userDetails: userDetails
+
 
                 }
                 OrderInitate(Product).then((res) => {
                         console.log(Product)
-                        navigation.navigate("OrderSuccess")
+
+
                         dispatch({
                                 type: 'ORDER_DISPATCH',
 
                         })
+                        setVisible(false)
+                        navigation.navigate("OrderSuccess")
 
                 }).catch((err) => {
                         alert(err.response.error.message)
                 })
-                //navigation.navigate("Pastorder")
+
 
 
 
@@ -89,27 +94,7 @@ const Cart = ({ navigation, cart }) => {
 
 
 
-        const RenderPersnalDetails = () => {
-                return (
-                        <View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: SIZES.padding }}>
-                                        <Text style={{ fontWeight: '700' }}>Your Details</Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate("Persnaldetails")} >
-                                                <Text style={{ color: COLORS.red, fontWeight: '700', fontSize: 12 }}>Change</Text>
-                                        </TouchableOpacity>
 
-                                </View>
-                                <View style={{ marginVertical: 5 }}>
-                                        {
-                                                userDetails ? <Text style={{ color: COLORS.gray, marginHorizontal: 20, fontSize: 12, fontWeight: '700' }}>
-                                                        {userDetails.name} ,{userDetails.phone}
-                                                </Text> : <Text style={{ color: COLORS.gray, marginHorizontal: 20, fontSize: 12, fontWeight: '700' }}>Add to user Details</Text>
-                                        }
-                                </View>
-                                <Divider />
-                        </View>
-                )
-        }
 
         const Stepper = () => {
 
@@ -120,10 +105,10 @@ const Cart = ({ navigation, cart }) => {
                                         Add Address
                                 </Button>
                         )
-
+                                0
                         case 'userdetails': return (
-                                <Button mode="contained" color='crimson' onPress={() => navigation.navigate("Persnaldetails")}>
-                                        Add Persnal details
+                                <Button mode="contained" color='crimson' onPress={() => navigation.navigate("Mobile")}>
+                                        Add details
                                 </Button>
                         )
                         case 'payment': return (
@@ -196,6 +181,22 @@ const Cart = ({ navigation, cart }) => {
                         backgroundColor: COLORS.white,
 
                 }} >
+                        <AnimatedLoader
+                                visible={visible}
+                                overlayColor="rgba(255,255,255,0.85)"
+                                source={require("../../assets/messages/fruits.json")}
+                                animationStyle={{
+                                        width: 250,
+                                        height: 250
+                                }}
+                                speed={1}
+                        >
+                                <Text>Placing Order...</Text>
+                        </AnimatedLoader>
+
+
+
+
                         <View style={{ height: 60, flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.green }}>
                                 <TouchableOpacity onPress={() => navigation.goBack()}>
                                         <Image source={icons.back} style={{ width: 25, height: 15, marginLeft: 10, marginRight: 60 }} /></TouchableOpacity>
@@ -270,7 +271,7 @@ const Cart = ({ navigation, cart }) => {
 
                                                 cart.length > 0 ? <>
                                                         <RenderTotal />
-                                                        <RenderPersnalDetails />
+
                                                         <View style={{ marginVertical: 5 }}>
                                                                 <Text style={{ color: COLORS.red, marginHorizontal: SIZES.padding, fontSize: 10, elevation: 1 }}>
                                                                         Order once placed cannot be cancelled and are non-refundable

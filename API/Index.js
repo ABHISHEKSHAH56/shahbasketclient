@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; //importing axios for making requests 
 
 const API = axios.create({ baseURL: `https://shahbasket.herokuapp.com`, withCredentials: true }) //instance of axios for working with public APIS 
-const Protected = axios.create({ baseURL: `https://shahbasket.herokuapp.com`, withCredentials: true }) //instance of axios for working with protected APIS where accesstoken is required on each request
+const Protected = axios.create({ baseURL: `https://shah.herokuapp.com`, withCredentials: true }) //instance of axios for working with protected APIS where accesstoken is required on each request
 // import {useDispatch,useSelector} from 'react-redux'
 //this function will check the validity of access token before calling any api 
 Protected.interceptors.request.use(
@@ -72,4 +72,4 @@ export const Applogout = async () => await Protected.get("/auth/logout")
 export const PushProfileAddress = async (data) => await Protected.post("/user/add/address", data)
 export const AppVerifyMobile = async (data) => await Protected.patch("/user/update", data)
 export const OrderInitate = async (data) => await Protected.post("/order/initate", data)
-export const fetchProduct = async () => await Protected.get("/product/all")
+export const fetchProduct = async () => await API.get("/product/all")

@@ -2,8 +2,9 @@
 
 const initialState = {
         destination: null,
-        intialDestination: 'Select the Dilvery Address',
-        persnaldetails: null
+        address: null,
+        userData: null,
+
 
 }
 
@@ -17,21 +18,15 @@ const tabReducer = (state = initialState, action) => {
                                 destination: action.payload,
 
                         };
-                case 'SET_INITIAL_DESTENATION':
+
+
+                case 'SET_USER_DATA': {
                         return {
                                 ...state,
-                                intialDestination: action.payload,
-
-                        };
-                case 'SET_PERSNAL':
-                        return {
-                                ...state,
-                                persnaldetails: action.payload,
-
-                        };
-
-
-
+                                address: action.payload.address,
+                                userData: action.payload.userdata
+                        }
+                }
 
 
                 default: return state

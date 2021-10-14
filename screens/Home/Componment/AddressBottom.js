@@ -1,57 +1,152 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
-import Animated from 'react-native-reanimated';
-import ICONS from 'react-native-vector-icons/FontAwesome5'
+// import React, { useEffect, useState } from 'react'
+// import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
+// import Animated from 'react-native-reanimated';
+// import ICONS from 'react-native-vector-icons/FontAwesome5'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { GOOGLE_API_KEY } from "@env"
-import Geolocation from '@react-native-community/geolocation'
-import Geocoder from 'react-native-geocoding';
-import BottomSheet from 'reanimated-bottom-sheet';
-import { FONTS, icons, COLORS, SIZES } from '../../../constants';
+ import { GOOGLE_API_KEY } from "@env"
+ import Geolocation from '@react-native-community/geolocation'
+ import Geocoder from 'react-native-geocoding';
+// import BottomSheet from 'reanimated-bottom-sheet';
+ import { FONTS, icons, COLORS, SIZES } from '../../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+import React from 'react'
+import { StyleSheet, Text, View,Image,Alert } from 'react-native'
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Feather from 'react-native-vector-icons/Feather'
+import Fontisto from 'react-native-vector-icons/Fontisto'
+
+
+//  export default function AddressBottom({ navigation }) {
+//        
+
+
+        
+//         const ListAddress = () => {
+
+
+//                 return (
+//                         <View
+//                                 style={{
+//                                         backgroundColor: 'white',
+//                                         padding: 16,
+//                                         height: SIZES.height
+//                                 }}
+//                         >
+//                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: 60, }}>
+//                                         <Text style={{ ...FONTS.h3, fontWeight: '700' }}>
+//                                                 Search location
+
+//                                         </Text>
+//                                         <TouchableOpacity onPress={() => navigation.pop()}>
+//                                                 <Image source={icons.cross} style={{ height: 15, width: 20 }} />
+//                                         </TouchableOpacity>
+//                                 </View>
+
+
+//                                 {/* search */}
+//                                 
+//                                 <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}
+//                                         onPress={getcurrentlocation}
+//                                 >
+//                                         <ICONS name="location-arrow" color={COLORS.red} size={20} />
+//                                         <Text style={{ color: COLORS.red, marginLeft: 5 }}>Use Current Location</Text>
+
+//                                 </TouchableOpacity>
+
+//                                 {/* usecureentlocation */}
+//                                 <View style={{ marginTop: 20 }} >
+//                                         <Text style={{ ...FONTS.h4, fontWeight: '700' }}>Saved Address</Text>
+
+
+
+
+//                                         {/* UserAddress.length > 0 ?
+//                                                         UserAddress.map((item, index) => {
+//                                                                 console.log(item)
+//                                                                 return (
+//                                                                         <TouchableOpacity key={index + 2350} style={{ flexDirection: 'row', height: 65, marginTop: 10, alignItems: 'center', borderBottomColor: COLORS.gray, borderBottomWidth: 2 }} >
+//                                                                                 <View style={{ flex: 1, alignItems: 'center' }}>
+//                                                                                         <ICONS name="home" color={COLORS.gray} size={20} />
+//                                                                                 </View>
+//                                                                                 <View style={{ flex: 8, alignItems: 'center' }}>
+//                                                                                         <Text>{item.description} </Text>
+
+//                                                                                 </View>
+
+
+//                                                                         </TouchableOpacity>)
+//                                                         }) : null */}
+
+
+
+
+//                                 </View>
+//                         </View>
+//                 )
+//         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //         return (
+// //                 <View style={{ flex: 1 }}>
+// //                         <ListAddress />
+// //                 </View>
+// //         )
+// // }
+
+
+
+
 export default function AddressBottom({ navigation }) {
-        const dispatch = useDispatch()
+     const dispatch = useDispatch()
+    
+    
+    const getcurrentlocation = () => {
+        Geolocation.getCurrentPosition(info => {
+                Geocoder.init(GOOGLE_API_KEY, { language: "en" });
+                Geocoder.from(info.coords.latitude, info.coords.longitude).then(json => {
 
-        const getcurrentlocation = () => {
-                Geolocation.getCurrentPosition(info => {
-                        Geocoder.init(GOOGLE_API_KEY, { language: "en" });
-                        Geocoder.from(info.coords.latitude, info.coords.longitude).then(json => {
+                        dispatch({
+                                type: 'SET_DESTENATION',
+                                payload: {
+                                        location: {
+                                                lat: info.coords.latitude,
+                                                lng: info.coords.longitude
 
-                                dispatch({
-                                        type: 'SET_DESTENATION',
-                                        payload: {
-                                                location: {
-                                                        lat: info.coords.latitude,
-                                                        lng: info.coords.longitude
-
-                                                },
-                                                description: json.results[0].formatted_address
-                                        }
+                                        },
+                                        description: json.results[0].formatted_address
+                                }
 
 
-
-                                })
-                                navigation.navigate('MapScreen')
 
                         })
-                },
-                        error => { Alert.alert(error.message, "Turn on Your Location or Type manually") },
-                        {
-                                enableHighAccuracy: false,
-                                timeout: 2000,
-                                maximumAge: 3600000
-                        }
+                        navigation.navigate('MapScreen')
+
+                })
+        },
+                error => { Alert.alert(error.message, "Turn on Your Location or Type manually") },
+                {
+                        enableHighAccuracy: false,
+                        timeout: 2000,
+                        maximumAge: 3600000
+                }
 
 
-                )
-
-
-
-
-
-
+        )
 
 
 
@@ -66,7 +161,13 @@ export default function AddressBottom({ navigation }) {
 
 
 
-        }
+
+
+
+
+
+
+}
 
 
 
@@ -74,61 +175,48 @@ export default function AddressBottom({ navigation }) {
 
 
 
-        const ListAddress = () => {
 
 
-                return (
-                        <View
-                                style={{
-                                        backgroundColor: 'white',
-                                        padding: 16,
-                                        height: SIZES.height
-                                }}
-                        >
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: 60, }}>
-                                        <Text style={{ ...FONTS.h3, fontWeight: '700' }}>
-                                                Search location
-
-                                        </Text>
-                                        <TouchableOpacity onPress={() => navigation.pop()}>
-                                                <Image source={icons.cross} style={{ height: 15, width: 20 }} />
-                                        </TouchableOpacity>
-                                </View>
 
 
-                                {/* search */}
-                                <View style={{ flexDirection: 'row', marginBottom: 15 }}>
-                                        <GooglePlacesAutocomplete
-                                                renderLeftButton={() => {
+
+
+    return (
+        <View style={styles.container} >
+            <SafeAreaView>
+                <View style={styles.card}>
+                    <View style={styles.drop}>
+                        <Text style={styles.dropText}> Drop Address</Text>
+                        <TouchableOpacity onPress={()=>navigation.pop()}>
+                            <Feather name="x" size={24} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginBottom: 15 }}>
+                                         <GooglePlacesAutocomplete
+                                                renderRightButton={() => {
                                                         return (
-                                                                <View>
-                                                                        <Image source={icons.search} style={{ height: 20, width: 20, marginLeft: 5, marginTop: 10 }} />
+                                                                <View style={styles.inputwrapper}>
+                                                                    <Feather name="search" size={24} style={{marginRight:10}} />
                                                                 </View>
                                                         )
                                                 }}
 
-                                                placeholder='Search...'
+                                                
+                                                placeholderTextColor="#afb1b6" placeholder="Where are to deliver?"
                                                 nearbyPlacesAPI="GooglePlacesSearch"
                                                 debounce={400}
                                                 styles={{
 
                                                         container: {
                                                                 flex: 1,
-                                                                marginTop: 5,
-                                                                elevation: 2,
+                                                                marginTop: 15,
+                                                                elevation: 1,
                                                                 backgroundColor: COLORS.white2,
                                                                 borderRadius: 10
-
-
-
-                                                        },
+                                                            },
                                                         textInput: {
-                                                                fontSize: 14,
-                                                                height: 40,
-
-
-
-
+                                                                fontSize: 16,
+                                                                height: 50,
                                                         },
                                                 }}
                                                 minLength={4}
@@ -157,68 +245,148 @@ export default function AddressBottom({ navigation }) {
 
 
 
-                                <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}
-                                        onPress={getcurrentlocation}
-                                >
-                                        <ICONS name="location-arrow" color={COLORS.red} size={20} />
-                                        <Text style={{ color: COLORS.red, marginLeft: 5 }}>Use Current Location</Text>
-
-                                </TouchableOpacity>
-
-                                {/* usecureentlocation */}
-                                <View style={{ marginTop: 20 }} >
-                                        <Text style={{ ...FONTS.h4, fontWeight: '700' }}>Saved Address</Text>
 
 
-                                        <TouchableOpacity style={{ flexDirection: 'row', height: 65, marginTop: 10, alignItems: 'center', borderBottomColor: COLORS.gray, borderBottomWidth: 2 }}>
-                                                <View style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="home" color={COLORS.gray} size={20} />
-                                                </View>
-                                                <View style={{ flex: 8, alignItems: 'center' }}>
-                                                        <Text>Bapa nagar padam sing road karol bagh </Text>
-
-                                                </View>
-                                                {/* <TouchableOpacity style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="ellipsis-v" color={COLORS.gray} size={20} />
-                                                </TouchableOpacity> */}
-
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={{ flexDirection: 'row', height: 65, marginTop: 10, alignItems: 'center', borderBottomColor: COLORS.gray, borderBottomWidth: 2 }}>
-                                                <View style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="home" color={COLORS.gray} size={20} />
-                                                </View>
-                                                <View style={{ flex: 8, alignItems: 'center' }}>
-                                                        <Text>Bapa nagar padam sing road karol bagh </Text>
-
-                                                </View>
-                                                {/* <TouchableOpacity style={{ flex: 1, alignItems: 'center' }}>
-                                                        <ICONS name="ellipsis-v" color={COLORS.gray} size={20} />
-                                                </TouchableOpacity> */}
-
-                                        </TouchableOpacity>
 
 
-                                </View>
+                    
+                    <View style={styles.bottomCard}>
+                        <View style={styles.bottomCardPin}>
+                            <Fontisto name="map-marker-alt" size={20} style={styles.bottomCardIcon} />
+                            <Text style={styles.bottomCardText}>Tap to Select from map</Text>
                         </View>
-                )
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        return (
-                <View style={{ flex: 1 }}>
-                        <ListAddress />
+                        <TouchableOpacity style={styles.bottomCircle} onPress={getcurrentlocation}>
+                            <Feather name="arrow-right" size={20} style={{color:'#fff'}} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-        )
+            </SafeAreaView>
+            <View style={styles.containerwrapper}>
+                <Text style={styles.bidtitle}>Recently Search places</Text>
+                <View>
+                    
+                      
+                            <View style={styles.favwrapper}>
+                                <View style={styles.favwrapper2}>
+                                    <Fontisto name="home" size={18} style={{marginRight:15,color:'#77D970'}} />
+                                
+                                    <View>
+                                    <Text style={styles.favTitle} >Home</Text>
+                                    <Text style={styles.subTitle}>16/1301 E-block</Text>
+                                    </View>
+                                </View>    
+                                <View>
+                                    <Feather name="minus-circle" size={24} style={{color:'#FF0075'}} />
+                                </View>
+
+                            </View>
+                        
+                    
+                </View>
+            </View>
+        </View>
+    )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:'#ffff'
+
+    },
+    card:{
+        padding:20,
+        marginHorizontal:10,
+        borderColor:'#efefef',
+        borderWidth:1,
+        borderRadius:20,
+        marginTop:50,
+
+
+    },
+    drop:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+
+
+    },
+    dropText:{
+        fontWeight:'bold',
+        color:'#ff5563'
+
+    },
+    inputwrapper:{
+        flexDirection:'row',
+        alignItems:'center',
+
+
+    },
+    bottomCard:{
+       flexDirection:'row',
+       justifyContent:'space-between',
+       alignItems:'center',
+       marginTop:20,
+
+   },
+   bottomCardPin:{
+       flexDirection:'row',
+       alignItems:'center'
+
+   },
+   bottomCardIcon:{
+       color:'#ff4858',
+       marginRight:10,
+
+
+   },
+   bottomCardText:{
+       color:'#92939b',
+       fontWeight:'500',
+       fontSize:16
+
+   },
+   bottomCircle:{
+       width:50,
+       height:50,
+       borderRadius:50,
+       justifyContent:'center',
+       alignItems:'center',
+       backgroundColor:'#000'
+
+   },
+   containerwrapper:{
+       paddingHorizontal:20,
+       marginTop:20
+
+   },
+   bidtitle:{
+       fontWeight:'bold',
+       fontSize:20,
+       color:'#404152',
+       marginBottom:20,
+   },
+   favwrapper:{
+       flexDirection:'row',
+       justifyContent:'space-between',
+       alignItems:'center',
+       marginBottom:20,
+
+
+   },
+   favwrapper2:{
+       flexDirection:'row'
+   },
+   favTitle:{
+       fontWeight:'bold',
+       fontSize:16,
+       color:'#555664',
+       marginBottom:5
+
+   },
+   subTitle:{
+       color:'#a9abb8'
+   }
+   
+});
+

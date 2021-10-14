@@ -6,7 +6,7 @@ import { COLORS, SIZES } from '../../constants'
 export default function OrderSuccessPage({ navigation }) {
         useEffect(() => {
                 setTimeout(() => {
-                        navigation.popToTop()
+                        navigation.navigate("Home")
 
 
                 }, 4000);

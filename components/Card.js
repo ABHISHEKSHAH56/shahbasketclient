@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import { Button } from 'react-native-paper'
 import { COLORS, FONTS, icons, SIZES } from '../constants'
-import RNPickerSelect from '@react-native-picker/picker'
-import inr from './inr.png'
-import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, adjustItemQty, removeFromCart } from '../stores/Shopping/shopping-actions'
 
@@ -19,6 +15,7 @@ export default function CardItem({ data, containerStyle, onpress }) {
   const [cureentIndex, setcurrentIndex] = useState(baseindex)
   const [cureentWeight, setcurrentWeight] = useState(baseqty)
   const [currentprice, setcurrentprice] = useState(baseprice)
+
 
   useEffect(() => {
     if (data.isCart === undefined) {
@@ -107,10 +104,10 @@ export default function CardItem({ data, containerStyle, onpress }) {
         <Text style={{ color: COLORS.white, fontSize: 10, padding: 2, fontWeight: '700' }}>{data.tag}</Text>
       </View>
       <View style={{ flex: 3, justifyContent: 'flex-start', marginTop: 30, marginLeft: 5 }}>
-        <Text style={{ fontWeight: '700', fontSize: 17 }}>{data.name}/{data.englishName}</Text>
-        <Text style={{ fontWeight: '500', color: COLORS.gray, fontSize: 12 }}>Genrally used in {data.description} </Text>
+        <Text style={{ fontWeight: '700', fontSize: 17, marginHorizontal: 4 }}>{data.name}</Text>
+        <Text numberOfLines={2} style={{ fontWeight: '500', marginHorizontal: 4, color: COLORS.gray, fontSize: 12 }}>{data.description} </Text>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={{ margin: 2, color: COLORS.gray }}>Quantity: </Text>
+          <Text style={{ margin: 2, color: COLORS.black, fontSize: 14 }}>Quantity: </Text>
           {
             !click ? <View style={{ margin: 2, width: 60, borderWidth: 1, borderColor: COLORS.blue, borderRadius: 4 }}>
 
@@ -138,8 +135,9 @@ export default function CardItem({ data, containerStyle, onpress }) {
         </View>
 
         <View style={{ flexDirection: 'row', margin: 2 }}>
+          <Text style={{ marginRight: 10 }}>Price:</Text>
 
-          <Image source={inr} style={{ height: 15, width: 15 }} />
+          <Image source={icons.inr} style={{ height: 15, width: 15, marginTop: 4 }} />
           {
             click ? <Text style={{ fontWeight: '700' }}>{currentprice}</Text> : <Text style={{ fontWeight: '700' }}>{baseprice}</Text>
           }
@@ -149,7 +147,7 @@ export default function CardItem({ data, containerStyle, onpress }) {
 
 
       <View style={{}}>
-        <Image source={{ uri: data.image }} style={{ height: 100, width: 110, margin: 4, marginTop: 10 }} resizeMode='contain' />
+        <Image source={{ uri: data.image }} style={{ height: 100, width: 100, margin: 4, marginTop: 10 }} resizeMode='contain' />
       </View>
       <View style={{ position: 'absolute', bottom: 3, right: 20, borderRadius: 3, borderTopRightRadius: 3 }}>
 

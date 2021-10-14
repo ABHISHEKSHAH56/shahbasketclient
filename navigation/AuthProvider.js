@@ -16,93 +16,7 @@ export const Authprovider = ({ children }) => {
   return (
     <AuthContext.Provider value={{
       user, setuser,
-      login: async (email, password) => {
-        try {
-          await auth().signInWithEmailAndPassword(email, password);
-          const data = {
-            email: email, password: password
-          }
-          await AppLogIn(data).then((res) => {
-            AsyncStorage.setItem("accessToken", res.data.accessToken)
-            AsyncStorage.setItem("userData", JSON.stringify(res.data.user))
 
-            console.log(res.data.accessToken)
-          })
-        } catch (error) {
-          console.log(error)
-
-        }
-      },
-      register: async (email, password) => {
-        try {
-          await auth().createUserWithEmailAndPassword(email, password)
-
-          const data = {
-            email: email, password: password
-          }
-          await AppSignUp(data).then((res) => {
-            console.log(res.data)
-            AsyncStorage.setItem("accessToken", res.data.accessToken)
-            AsyncStorage.setItem("userData", JSON.stringify(res.data.user))
-
-            console.log(res.data.accessToken)
-          })
-
-
-
-
-        } catch (e) {
-          console.log(e);
-        }
-
-      },
-      logout: async () => {
-        try {
-          await auth().signOut();
-          await Applogout().then((res) => {
-            AsyncStorage.setItem("accessToken", '')
-            AsyncStorage.setItem("userData", '')
-            console.log(res.data)
-          })
-
-        } catch (error) {
-          console.log(error)
-
-        }
-      },
-      googlelogin: async () => {
-
-        try {
-          // Get the users ID token
-          const { idToken } = await GoogleSignin.signIn();
-
-          // Create a Google credential with the token
-          const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-          // Sign-in the user with the credential
-          await auth().signInWithCredential(googleCredential)
-          const data = {
-            email: auth().currentUser.email,
-            password: "ramjankihai",
-            name: auth().currentUser.displayName,
-            phone: auth().currentUser.phoneNumber,
-            profileimage: auth().currentUser.photoURL
-
-          }
-          console.log(data)
-          await AppGoogleLogIn(data).then((res) => {
-            console.log(res.data)
-            AsyncStorage.setItem("accessToken", res.data.accessToken)
-            AsyncStorage.setItem("userData", JSON.stringify(res.data.user))
-          }).catch((err) => console.log(err.response.error))
-
-        } catch (error) {
-          console.log({ error });
-        }
-
-
-
-      },
       phonelogin: async (mobile) => {
         try {
           console.log(mobile)
@@ -127,45 +41,50 @@ export const Authprovider = ({ children }) => {
           }
           console.log(data)
           AppMobileLogIn(data).then((res) => {
-            console.log(res.data.accessToken)
             AsyncStorage.setItem("accessToken", res.data.accessToken)
-            AsyncStorage.setItem("userData", JSON.stringify(res.data.user))
-          }).catch((err) => console.log(err.response.error))
+
+            dispatch({
+              type: 'SET_USER_DATA',
+              payload: {
+                address: res.data.user.address,
+                userdata: res.data.user._id
+              }
+            })
+            return true;
+
+          }).catch((err) => {
+            return false;
+          })
 
 
         } catch (error) {
-          alert(JSON.stringify(error))
+          console.log(error)
 
 
         }
 
       },
-      userverifier: async (otp, name) => {
+      logout: async () => {
         try {
-          await confirm.confirm(otp);
-          const data = {
-            name: name,
-            phone: auth().currentUser.phoneNumber,
-          }
-          await AppVerifyMobile(data).then((res) => {
-            console.log(res.data.id)
-            dispatch({
-              type: 'SET_PERSNAL',
-              payload: {
-                id: res.data.id,
-                name: name,
-                phone: auth().currentUser.phoneNumber
-              }
-            })
-          }).catch((err) => console.log(err.response))
+          await auth().signOut();
+          await Applogout().then((res) => {
+            AsyncStorage.setItem("accessToken", '')
+          })
+          dispatch({
+            type: 'SET_USER_DATA',
+            payload: {
+              address: null,
+              userdata: null
+            }
+          })
+
 
 
         } catch (error) {
-          alert(JSON.stringify(error))
-
+          console.log(error)
 
         }
-      }
+      },
 
     }}>
       {children}
