@@ -5,31 +5,18 @@ import { useDispatch } from 'react-redux';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import { addToCart, adjustItemQty, removeFromCart } from '../../stores/Shopping/shopping-actions';
 
-export default function ProductCard2({data}) {  
+export default function CartCard({data}) { 
   const baseweight=parseFloat(data.baseQty)
-  const maxweight=25  
-  const [weight, setweight] = useState(baseweight)
-  const [measuremnt, setmeasuremnt] = useState("Kg")
-  const [addtocart, setaddtocart] = useState(true)
+  const [weight, setweight] = useState(parseFloat(data.qty))
+  const [price, setprice] = useState(data.qty*data.basePrice)
+  const [measurment, setmeasurment] = useState('Kg')
+  
   const dispatch = useDispatch()
-
-
   useEffect(() => {
-    if (data.isCart === undefined) {
-      setaddtocart(true)
-    }
-    else if (data.isCart) setaddtocart(false)
-    setweight(parseFloat(data.qty))    
-    if (!data.isCart) setaddtocart(true)
-  }, [data])
+   setprice(data.qty*data.basePrice)
+}, [weight,data])
 
-  const AddToCart=()=>{
-      setaddtocart(false)
-      dispatch(addToCart(data._id))
-      
-
-
-  }
+  
 
   const onincrement=()=>{
       if(weight<1)
@@ -51,7 +38,7 @@ export default function ProductCard2({data}) {
       {
           
           dispatch(removeFromCart(data._id))
-          setaddtocart(true)
+         
           
           
       }
@@ -82,11 +69,11 @@ export default function ProductCard2({data}) {
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 20,
+        marginBottom: 15,
         backgroundColor: '#fff',
         marginHorizontal: 4,
         borderRadius: 20,
-        height: 100,
+        height: 60,
         shadowColor: COLORS.gray,
         shadowOffset: {
           height: 3,
@@ -98,56 +85,30 @@ export default function ProductCard2({data}) {
       }}>
       <View
         style={{
-          flex: 1.2,
+          
           backgroundColor: COLORS.lightGray2,
-          borderRadius: 10,
-          marginLeft: 5,
-          marginVertical: 5,
+          
+          marginLeft: 15,
+          justifyContent:"center",
+          marginVertical: 5,borderRadius:60,
+          
+          
         }}>
         <Image
           source={require("../../assets/categorey/p4.png")}
           resizeMode="contain"
-          style={{height: 80, width: 80, alignSelf: 'center'}}
+          style={{height: 40, width: 40, alignSelf: 'center',padding:5 }}
         />
       </View>
-      <View style={{flex: 2, justifyContent: 'center', marginHorizontal: 10}}>
+      <View style={{flex: 2, justifyContent: 'center', marginHorizontal: 20}}>
         <Text style={{fontWeight: 'bold', ...FONTS.h3}}>{data.name}</Text>
-        <Text numberOfLines={2} style={{fontSize: 10, color: COLORS.gray}}>
-         {data.description}
-        </Text>
-      </View>
-      <View style={{flex: 2, justifyContent: 'center'}}>
-        <View>
-          <Text style={{fontWeight: 'bold', color: '#E2703A'}}>
+        <Text style={{fontWeight: 'bold', color: '#E2703A'}}>
            
-            Rs {data.basePrice}/Kg
+            Rs {price.toFixed(2)}
           </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                fontSize: 10,
-                color: COLORS.gray,
-                textDecorationLine: 'line-through',
-              }}>
-              Rs {data.basePrice*2}.00/Kg{' '}
-            </Text>
-            <Text
-              style={{
-                marginLeft: 4,
-                color: COLORS.green,
-                fontWeight: '700',
-                fontSize: 10,
-              }}>
-              20% OFF
-            </Text>
-          </View>
-        </View>
-        {
-          addtocart ?
-          <TouchableOpacity onPress={AddToCart} style={{alignSelf:'center' ,backgroundColor:COLORS.green,height:25,width:55,justifyContent:'center',alignItems:'center',borderRadius:10,marginTop:10}} >
-          <Text style={{fontWeight:'bold',color:'#fff',paddingVertical:2}}>Add</Text>     
-          </TouchableOpacity>:
-          <View
+      </View>
+      <View style={{flex: 2, justifyContent: 'center',marginHorizontal:5}}>
+       <View
           style={{
             flexDirection: 'row',
             height: 25,
@@ -178,7 +139,7 @@ export default function ProductCard2({data}) {
               borderRadius: 5,
               marginHorizontal: 3,
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 12}}> {weight} {measuremnt}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 12}}> {weight} {measurment}</Text>
           </View>
           <TouchableOpacity
             onPress={onincrement}
@@ -193,7 +154,7 @@ export default function ProductCard2({data}) {
             <Icon name="plus" color="#fff" size={20} />
           </TouchableOpacity>
           </View>
-        }
+        
       </View>
     </View>
   );

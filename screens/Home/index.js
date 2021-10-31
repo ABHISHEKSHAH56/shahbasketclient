@@ -51,7 +51,12 @@ export default function Home({ navigation }) {
         }, [])
         const shop = useSelector(state => state.shop.products)
         const cart = useSelector(state => state.shop.cart)
-        const subtotal = cart.reduce((a, c) => a + c.price, 0)
+        const subtotal = cart.reduce((a, c) => {
+                if(a==b)
+                {
+                        a + c.price, 0
+                }
+        })
         console.log(Userdetails)
 
 

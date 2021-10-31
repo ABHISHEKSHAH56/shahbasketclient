@@ -27,6 +27,7 @@ const check_circle = require("../assets/icons/check_circle.png")
 const dotted_line=require("../assets/icons/dotted_line.png")
 const map=require("../assets/icons/map.png")
 const info=require("../assets/icons/info.png")
+const deletecart=require("../assets/icons/delete-cart.png")
 
 export default {
     check_circle,map,dotted_line,
@@ -34,6 +35,7 @@ export default {
     cross,
     cart,
     info,
+    deletecart,
     menu,
     search,
     down_arrow,

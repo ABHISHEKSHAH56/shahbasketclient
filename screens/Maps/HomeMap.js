@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image,TextInput} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {COLORS, FONTS, icons, SIZES} from '../../constants';
 import MapView, {
   Callout,
   Circle,
@@ -11,17 +11,21 @@ import MapView, {
 import Geocoder from 'react-native-geocoding';
 import {GOOGLE_API_KEY} from '@env';
 import {useNavigation} from '@react-navigation/native';
-import Mapstyle from '../Home/Componment/Mapstyle';
 import Feather from 'react-native-vector-icons/Feather';
 import Svg, {Path} from 'react-native-svg';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default function HomeMap() {
   const navigation = useNavigation();
   const destination = useSelector(state => state.address.destination);
-  const [formateedAdress, setformateedAdress] = React.useState(null);
+  const [formateedAdress, setformateedAdress] = React.useState('');
+  const [custome, setcustome] = useState('')
   console.log(destination, 'jjhnhgvb');
   const dispatch = useDispatch();
+  const formhandller=()=>{
+    navigation.pop(2)
+
+  }
+
   return (
     <View style={{flex:1}}>
       
@@ -117,7 +121,7 @@ export default function HomeMap() {
                 
                  <View style={styles.Note}>
                          <View style={{}}>
-                                 <Text style={{fontWeight:'bold',marginVertical:5,color:'#091353',fontSize:15}}>Your Location Detected</Text>
+                         <Text style={{marginVertical:5,color:COLORS.black,fontSize:12,fontWeight:"bold"}}>Locations Detected  *</Text>
                                  <TextInput 
                                  placeholder="Not Able to Detect" 
                                  style={{
@@ -128,17 +132,20 @@ export default function HomeMap() {
                                          backgroundColor:'#fff',                                         
                                          marginHorizontal:3,
                                          borderRadius:8,
-                                         borderWidth:1,
-                                         borderColor:COLORS.darkBlue,
-                                         paddingHorizontal:15
+                                         borderBottomWidth:2,
+                                         borderColor:COLORS.primary,
+                                         paddingHorizontal:15,
+                                         elevation:2
                                  }}
                                   value={destination.description } />
 
                          </View>
                          <View style={{}}>
-                                 <Text style={{fontWeight:'bold',marginVertical:5,color:'#091353',fontSize:15}}>Complete Address *</Text>
+                                 <Text style={{marginVertical:5,color:COLORS.black,fontSize:12,fontWeight:"bold"}}>Complete Address *</Text>
                                  <TextInput 
-                                 placeholder="Floor,Near By"
+                                 placeholder="Floor,Near By Area "
+                                 value={custome}
+                                 onChangeText={(e)=>setcustome(e)}
                                  style={{
                                          
                                         height:50,
@@ -147,21 +154,34 @@ export default function HomeMap() {
                                         backgroundColor:'#fff',                                         
                                         marginHorizontal:3,
                                         borderRadius:8,
-                                        borderWidth:1,
-                                        borderColor:COLORS.darkBlue,
-                                        paddingHorizontal:15
+                                        borderBottomWidth:2,
+                                         borderColor:COLORS.primary,
+                                         paddingHorizontal:15,
+                                         elevation:2
                                          
                                  }}
                                    />
+                                  {
+                                    custome.length>3 || custome.length==0? <View></View>:
+                                    <View style={{flexDirection:"row",marginVertical:5,marginHorizontal:5}}>
+                                    <Image source={icons.info} style={{height:12,width:12,tintColor:COLORS.red}} />
+                                    <Text style={{fontSize:10,color:COLORS.red,marginLeft:5}}>Please Fill The Required </Text>                                    
+                                  </View> 
+                                  }
 
                          </View>
                 
                     
                  </View>
-                 <TouchableWithoutFeedback style={[styles.footerAction,{backgroundColor:COLORS.gray}]}>
-                     <Text style={styles.footertext}>Confirm</Text>
+                 <View style={[styles.footerAction,{backgroundColor:"#f5f5f6"}]}>
+                     <TouchableOpacity 
+                     onPress={custome.length>3?formhandller:()=>{}}
+                        style={{marginHorizontal:20,backgroundColor:custome.length>3?COLORS.green:COLORS.gray,width:SIZES.width-100,height:40,justifyContent:"center",borderRadius:10,alignItems:"center"}}>
+                       <Text style={{fontSize:16,color:"#fff"}}>Confirm</Text>
+                     </TouchableOpacity>
                    
-                 </TouchableWithoutFeedback>
+                 </View>
+                 
 
              </View>
 
@@ -172,76 +192,6 @@ export default function HomeMap() {
   );
 }
 
-
-//  import React from 'react'
-//  import { StyleSheet, Text, View } from 'react-native'
-//  import MapView, { Marker} from 'react-native-maps'
-//  import { SafeAreaView } from 'react-native-safe-area-context';
-//  import { SIZES } from "../../constants";
-
-
-//  import MapViewDirections from 'react-native-maps-directions'
-//  const aspectRation=SIZES.width/SIZES.height;
-//  export default function HomeMap() {
-//      return (
-//          <View style={{
-//              flex:1
-//          }}>
-//              <MapView provider="google"
-            
-//              initialRegion={{
-//                  latitude: 28.6510303,
-//                  longitude: 77.1834421,
-//                  latitudeDelta: 0.01,
-//                  longitudeDelta: 0.01,
-
-//                }}
-
-            
-            
-//              >
-//              <Marker
-//              coordinate={{
-//                  latitude: 28.6510303,
-//                  longitude: 77.1834421,
-
-//              }}>
-
-//              </Marker>
-//              <Marker
-//              coordinate={{
-//                  latitude:28.6554182,
-//                  longitude:77.16462,
-
-//              }}>
-//                  <View style={[
-//                      styles.dotwrapper,
-//                      {
-//                          backgroundColor:'rgba(247,70,86,.25)'
-//                      }
-//                  ]}>
-//                      <View style={[
-//                      styles.dot,
-//                      {
-//                          backgroundColor:'#f74656'
-//                      }
-//                  ]}>
-
-//                      </View>
-
-
-//                  </View>
-
-//              </Marker>
-            
-
-
-
-//              </MapView>
-     
-//          </View>
-//      )
-//  }
 
 const styles = StyleSheet.create({
         dotwrapper:{
@@ -290,7 +240,7 @@ const styles = StyleSheet.create({
         footerAction:{
             width:SIZES.width,           
             alignItems:'center',
-            paddingTop:20,
+           
             paddingBottom:20,
            
         },
@@ -301,38 +251,4 @@ const styles = StyleSheet.create({
         }
     })
     
-    
-//      <View
-//          style={{backgroundColor: COLORS.white2, height: SIZES.height / 3 - 10}}>
-//          <View style={{marginVertical: SIZES.padding, marginHorizontal: 5}}>
-//            <Text style={{fontSize: 16, fontWeight: '700'}}>
-//              Select Delivery Location
-//            </Text>
-//          </View>
-//          <Divider />
-//          <Text style={{margin: 5, fontWeight: '700', color: COLORS.gray}}>
-//            YOUR LOCATION
-//          </Text>
-//          <View style={{marginLeft: 15, marginRight: 15, marginTop: 25}}>
-//            {destination.description ? (
-//              <Text numberOfLines={1}>{destination.description}</Text>
-//            ) : (
-//              <Text numberOfLines={1}>
-//                Not able to detect...change pin somewhere around
-//              </Text>
-//            )}
-//          </View>
-//          <Divider />
-//          <View style={{flex: 1, justifyContent: 'center'}}>
-//            <Button
-//              mode="contained"
-//              color={destination.description ? COLORS.green : COLORS.gray}
-//              onPress={() =>
-//                destination.description
-//                  ? navigation.navigate('FormAddress')
-//                  : null
-//              }>
-//              Confirm Location
-//            </Button>
-//          </View>
-//        </View>
+ 

@@ -1,8 +1,7 @@
 
 
 const initialState = {
-        destination: null,
-        address: null,
+        destination: null,       
         userData: null,
 
 
@@ -23,7 +22,7 @@ const tabReducer = (state = initialState, action) => {
                 case 'SET_USER_DATA': {
                         return {
                                 ...state,
-                                address: action.payload.address,
+                                destination: action.payload.address,
                                 userData: action.payload.userdata
                         }
                 }

@@ -1,9 +1,91 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { useDispatch } from 'react-redux';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import { removeFromCart,addToCart } from '../../stores/Shopping/shopping-actions';
 
 export default function ProductCard1({item}) {
+    const baseprcie=20
+    const baseweight=1
+    const maxweight=25
+    const [weight, setweight] = useState(baseweight)
+    const [price, setprice] = useState(baseprcie)
+    const [measuremnt, setmeasuremnt] = useState("kg")
+    const [addtocart, setaddtocart] = useState(true)
+    const dispatch = useDispatch()
+
+    const AddToCart=()=>{
+        setaddtocart(false)
+        //dispatch(addToCart(data._id))
+        
+
+
+    }
+
+    const onincrement=()=>{
+        if(weight==750)
+        {
+            setweight(1)
+            setprice(baseprcie)
+            setmeasuremnt('Kg')
+            //dispatch(adjustItemQty(data._id,weight,measuremnt,price))
+        }
+        else if(weight==maxweight)
+        {
+            //weight reaches some higer point send some pop up 
+            //you can call 
+        }
+        else if(weight<750 && measuremnt=='gm')
+        {
+            setweight(weight+250)
+            setprice(baseprcie*weight/1000)
+        }
+        else{
+            setweight(weight+1)
+            setprice(baseprcie*weight)
+            //dispatch(adjustItemQty(data._id,weight,measuremnt,price))
+        }
+        console.log(price)
+    }
+    const ondecriment=()=>{
+        if(weight==baseweight)
+        {
+            setaddtocart(true)
+            console.log("bh")
+            //dispatch(adjustItemQty(data._id,weight,measuremnt,price))
+
+        }
+        else if(weight==1)
+        {
+           
+            setweight(750)
+            setprice(baseprcie*3/4)
+            setmeasuremnt('gm')
+            //dispatch(removeFromCart(data._id))
+
+        }
+        else if(weight>1 && measuremnt=='kg')
+        {
+            setweight(weight-1)
+            setprice(baseprcie*weight)
+            
+        }
+        else{
+            setweight(weight-250)
+            setprice(baseprcie*weight/1000)
+           // dispatch(adjustItemQty(data._id,weight,measuremnt,price))
+           
+
+        }
+        console.log(price)
+    }
+
+
+
+
+
+
     return (
         <View 
                             style={{
@@ -58,7 +140,9 @@ export default function ProductCard1({item}) {
                                 
                                 
                                 <View style={{justifyContent:'center'}}>
-                                {/* <View style={{
+                               {
+                                   addtocart ?
+                                     <TouchableOpacity onPress={AddToCart} style={{
                                     height:30,
                                     width:30,
                                     backgroundColor:'#FFC288',                                   
@@ -70,22 +154,24 @@ export default function ProductCard1({item}) {
                                 }}>
                                     <Icon name="plus" size={24} color={'#fff'} />
 
-                                </View> */}
+                                 </TouchableOpacity> :
+                               
 
                                 <View style={{flexDirection:'row', height:25,justifyContent:'center',alignItems:'center',borderRadius:10,marginTop:10}}>
-                                    <TouchableOpacity style={{backgroundColor:COLORS.red,height:18,width:18,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
+                                    <TouchableOpacity onPress={ondecriment} style={{backgroundColor:COLORS.red,height:18,width:18,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
                                         <Icon name="minus" color="#fff" size={16} />
                                     </TouchableOpacity>
                                     <View style={{backgroundColor:COLORS.lightGray2,width:40,height:20,justifyContent:'center',alignItems:'center',borderRadius:5,marginHorizontal:3}}>
                                         <Text style={{fontWeight:'bold',fontSize:12}}>
-                                            2 Kg
+                                            {weight} {measuremnt}
                                         </Text>
 
                                     </View>
-                                    <TouchableOpacity style={{backgroundColor:COLORS.green,height:18,width:18,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
+                                    <TouchableOpacity onPress={onincrement} style={{backgroundColor:COLORS.green,height:18,width:18,borderRadius:10,justifyContent:'center',alignItems:'center'}}>
                                         <Icon name="plus" color="#fff" size={16} />
                                     </TouchableOpacity>
                                 </View>
+                                }
 
 
                                 </View>

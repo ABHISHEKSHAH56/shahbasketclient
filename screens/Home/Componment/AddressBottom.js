@@ -19,102 +19,11 @@ import Feather from 'react-native-vector-icons/Feather'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
-//  export default function AddressBottom({ navigation }) {
-//        
-
-
-        
-//         const ListAddress = () => {
-
-
-//                 return (
-//                         <View
-//                                 style={{
-//                                         backgroundColor: 'white',
-//                                         padding: 16,
-//                                         height: SIZES.height
-//                                 }}
-//                         >
-//                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: 60, }}>
-//                                         <Text style={{ ...FONTS.h3, fontWeight: '700' }}>
-//                                                 Search location
-
-//                                         </Text>
-//                                         <TouchableOpacity onPress={() => navigation.pop()}>
-//                                                 <Image source={icons.cross} style={{ height: 15, width: 20 }} />
-//                                         </TouchableOpacity>
-//                                 </View>
-
-
-//                                 {/* search */}
-//                                 
-//                                 <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}
-//                                         onPress={getcurrentlocation}
-//                                 >
-//                                         <ICONS name="location-arrow" color={COLORS.red} size={20} />
-//                                         <Text style={{ color: COLORS.red, marginLeft: 5 }}>Use Current Location</Text>
-
-//                                 </TouchableOpacity>
-
-//                                 {/* usecureentlocation */}
-//                                 <View style={{ marginTop: 20 }} >
-//                                         <Text style={{ ...FONTS.h4, fontWeight: '700' }}>Saved Address</Text>
-
-
-
-
-//                                         {/* UserAddress.length > 0 ?
-//                                                         UserAddress.map((item, index) => {
-//                                                                 console.log(item)
-//                                                                 return (
-//                                                                         <TouchableOpacity key={index + 2350} style={{ flexDirection: 'row', height: 65, marginTop: 10, alignItems: 'center', borderBottomColor: COLORS.gray, borderBottomWidth: 2 }} >
-//                                                                                 <View style={{ flex: 1, alignItems: 'center' }}>
-//                                                                                         <ICONS name="home" color={COLORS.gray} size={20} />
-//                                                                                 </View>
-//                                                                                 <View style={{ flex: 8, alignItems: 'center' }}>
-//                                                                                         <Text>{item.description} </Text>
-
-//                                                                                 </View>
-
-
-//                                                                         </TouchableOpacity>)
-//                                                         }) : null */}
-
-
-
-
-//                                 </View>
-//                         </View>
-//                 )
-//         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //         return (
-// //                 <View style={{ flex: 1 }}>
-// //                         <ListAddress />
-// //                 </View>
-// //         )
-// // }
-
 
 
 
 export default function AddressBottom({ navigation }) {
-     const dispatch = useDispatch()
-    
-    
+     const dispatch = useDispatch() 
     const getcurrentlocation = () => {
         Geolocation.getCurrentPosition(info => {
                 Geocoder.init(GOOGLE_API_KEY, { language: "en" });
@@ -146,41 +55,7 @@ export default function AddressBottom({ navigation }) {
                 }
 
 
-        )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+        )}
     return (
         <View style={styles.container} >
             <SafeAreaView>

@@ -61,7 +61,7 @@ export default function CardItem({ data, containerStyle, onpress }) {
   const handleminus = () => {
     if (cureentIndex > baseindex) {
       const cost = baseprice * pricearray[cureentIndex - 1] / pricearray[baseindex]
-      dispatch(adjustItemQty(data._id, measurment[cureentIndex - 1], cost))
+       
       setcurrentprice(cost)
       setcurrentWeight(measurment[cureentIndex - 1])
       setcurrentIndex(cureentIndex - 1)

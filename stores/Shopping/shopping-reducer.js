@@ -1,7 +1,7 @@
 import * as actionTypes from "./shopping-types";
 
 const INITIAL_STATE = {
-  products: null,
+  products:[],
   cart: [],
 
 
@@ -14,15 +14,15 @@ const shopReducer = (state = INITIAL_STATE, action) => {
       const item = state.products.find(
         (product) => product._id === action.payload.id
       );
-      // Check if Item is in cart already
-      const inCart = state.cart.find((item) =>
-        item._id === action.payload.id ? true : false
-      );
+      
+
+           
 
       return {
         ...state,
-        cart: [...state.cart, { ...item, qty: item.baseQty, price: item.basePrice }],
-        products: state.products.map((item) => item._id === action.payload.id ? { ...item, qty: item.baseQty, price: item.basePrice, isCart: true } : item)
+        cart: [...state.cart, { ...item, qty: item.baseQty}],
+        products: state.products.map((item) => item._id === action.payload.id ? { ...item, qty: item.baseQty, isCart: true } : item)
+        
       };
     case actionTypes.REMOVE_FROM_CART:
       return {
@@ -37,12 +37,12 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cart: state.cart.map((item) =>
           item._id === action.payload.id
-            ? { ...item, qty: action.payload.qty, price: action.payload.price }
+            ? { ...item, qty: action.payload.qty}
             : item
         ),
         products: state.products.map((item) =>
           item._id === action.payload.id
-            ? { ...item, qty: action.payload.qty, price: action.payload.price }
+            ? { ...item, qty: action.payload.qty }
             : item
 
         )

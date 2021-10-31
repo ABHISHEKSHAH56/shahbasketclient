@@ -25,9 +25,8 @@ export default function FormAddress({ navigation }) {
 
         const handlleruser = async () => {
                 setVisible(true)
-                if (completeAddress.length > 4 && Name) {
+                if (completeAddress.length > 4) {
                         setprofileaddress({
-                                name: Name,
                                 description: destination.description,
                                 location: destination.location,
                                 completeAddress: completeAddress
@@ -36,7 +35,6 @@ export default function FormAddress({ navigation }) {
                         console.log(profileaddress)
 
                         await PushProfileAddress(profileaddress).then((res) => {
-
                                 dispatch({
                                         type: 'SET_DESTENATION',
                                         payload: { ...destination, name: Name, completeAddress: completeAddress }

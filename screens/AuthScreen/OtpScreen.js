@@ -32,7 +32,7 @@ const OtpScreen = ({ navigation, route }) => {
                         setTimeout(() => {
                                 setVisible(false)
                                 navigation.pop(2)
-                        }, 1000);
+                        }, 2000);
                 }
                 else {
 
